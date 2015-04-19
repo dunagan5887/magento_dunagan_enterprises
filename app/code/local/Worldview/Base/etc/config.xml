@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Worldview_Base>
+            <version>0.0.1</version>
+        </Worldview_Base>
+    </modules>
+
+    <global>
+        <models>
+            <worldview_base>
+                <class>Worldview_Base_Model</class>
+                <resourceModel>worldview_base_mysql4</resourceModel>
+            </worldview_base>
+        </models>
+
+        <helpers>
+            <worldview_base>
+                <class>Worldview_Base_Helper</class>
+            </worldview_base>
+        </helpers>
+
+        <blocks>
+            <worldview_base>
+                <class>Worldview_Base_Block</class>
+            </worldview_base>
+        </blocks>
+
+        <resources>
+            <worldview_base_setup>
+                <setup>
+                    <module>Worldview_Base</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </worldview_base_setup>
+        </resources>
+    </global>
+</config>

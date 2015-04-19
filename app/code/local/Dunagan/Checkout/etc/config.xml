@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dunagan_Checkout>
+            <version>0.0.1</version>
+        </Dunagan_Checkout>
+    </modules>
+
+    <global>
+        <models>
+            <dunagan_checkout>
+                <class>Dunagan_Checkout_Model</class>
+                <resourceModel>dunagan_checkout_mysql4</resourceModel>
+            </dunagan_checkout>
+        </models>
+
+        <helpers>
+            <dunagan_checkout>
+                <class>Dunagan_Checkout_Helper</class>
+            </dunagan_checkout>
+        </helpers>
+
+        <blocks>
+            <dunagan_checkout>
+                <class>Dunagan_Checkout_Block</class>
+            </dunagan_checkout>
+        </blocks>
+
+    </global>
+</config>

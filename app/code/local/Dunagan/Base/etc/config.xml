@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dunagan_Base>
+            <version>0.0.1</version>
+        </Dunagan_Base>
+    </modules>
+
+    <global>
+        <models>
+            <dunagan_base>
+                <class>Dunagan_Base_Model</class>
+                <resourceModel>dunagan_base_mysql4</resourceModel>
+            </dunagan_base>
+            <dunagan_base_mysql4>
+                <class>Dunagan_Base_Model_Mysql4</class>
+            </dunagan_base_mysql4>
+        </models>
+
+        <helpers>
+            <dunagan_base>
+                <class>Dunagan_Base_Helper</class>
+            </dunagan_base>
+        </helpers>
+
+        <blocks>
+            <dunagan_base>
+                <class>Dunagan_Base_Block</class>
+            </dunagan_base>
+        </blocks>
+    </global>
+</config>

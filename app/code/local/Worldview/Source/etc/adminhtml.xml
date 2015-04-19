@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <worldview>
+            <children>
+                <feeds translate="title" module="worldview_source">
+                    <title>Feeds</title>
+                    <sort_order>10</sort_order>
+                    <children>
+                        <sources translate="title" module="worldview_source">
+                            <title>Sources</title>
+                            <sort_order>10</sort_order>
+                            <action>worldview_source/index/index</action>
+                        </sources>
+                    </children>
+                </feeds>
+            </children>
+        </worldview>
+    </menu>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <worldview>
+                        <children>
+                            <feeds>
+                                <children>
+                                    <sources translate="title" module="worldview_source">
+                                        <title>Sources</title>
+                                    </sources>
+                                </children>
+                            </feeds>
+                        </children>
+                    </worldview>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

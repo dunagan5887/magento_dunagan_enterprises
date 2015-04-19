@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Worldview_Article>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Worldview_Base/>
+                <Worldview_Source/>
+                <Dunagan_Base/>
+            </depends>
+        </Worldview_Article>
+    </modules>
+</config>

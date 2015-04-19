@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+        <reference name="header">
+            <action method="setTemplate"><file>dunagan/page/html/header.phtml</file></action>
+        </reference>
+
+        <reference name="top.links">
+            <action method="removeLinkByUrl"><url helper="customer/getAccountUrl"/></action>
+            <action method="removeLinkByUrl"><url helper="customer/getRegisterUrl"/></action>
+            <action method="removeLinkByUrl"><url helper="customer/getLoginUrl"/></action>
+            <action method="removeLinkByUrl"><url helper="dunagan_checkout/getCartUrl"/></action>
+            <action method="removeLinkByUrl"><url helper="dunagan_checkout/getTopLinksCheckoutUrl"/></action>
+            <action method="removeLinkBlock"><name>wishlist_link</name></action>
+        </reference>
+
+        <reference name="footer">
+            <action method="unsetChild"><child>newsletter</child></action>
+        </reference>
+
+        <reference name="cms_footer_links">
+            <action method="setBlockId"><block_id>footer_links_company_dunagan_enterprises</block_id></action>
+            <action method="unsetChild"><child>cms_footer_links_sm</child></action>
+        </reference>
+    </default>
+
+    <customer_logged_in>
+        <reference name="right">
+            <action method="unsetChild"><child>catalog.compare.sidebar</child></action>
+        </reference>
+    </customer_logged_in>
+
+    <customer_account>
+        <reference name="right">
+            <action method="unsetChild"><child>catalog.compare.sidebar</child></action>
+        </reference>
+    </customer_account>
+
+    <customer_logged_out>
+        <reference name="top.links">
+            <action method="removeLinkByUrl"><url helper="customer/getLoginUrl"/></action>
+        </reference>
+
+        <reference name="right">
+            <action method="unsetChild"><child>catalog.compare.sidebar</child></action>
+        </reference>
+    </customer_logged_out>
+</layout>

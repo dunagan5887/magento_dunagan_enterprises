@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dunagan_CustomLayout>
+            <version>0.0.1</version>
+        </Dunagan_CustomLayout>
+    </modules>
+
+    <global>
+        <models>
+            <dunagan_custom_layout>
+                <class>Dunagan_CustomLayout_Model</class>
+                <resourceModel>dunagan_custom_layout_mysql4</resourceModel>
+            </dunagan_custom_layout>
+        </models>
+
+        <helpers>
+            <dunagan_custom_layout>
+                <class>Dunagan_CustomLayout_Helper</class>
+            </dunagan_custom_layout>
+        </helpers>
+
+        <blocks>
+            <dunagan_custom_layout>
+                <class>Dunagan_CustomLayout_Block</class>
+            </dunagan_custom_layout>
+        </blocks>
+
+        <resources>
+            <dunagan_custom_layout_setup>
+                <setup>
+                    <module>Dunagan_CustomLayout</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dunagan_custom_layout_setup>
+        </resources>
+    </global>
+
+    <frontend>
+        <layout>
+            <updates>
+                <dunagan_custom_layout>
+                    <file>dunagan/custom_layout.xml</file>
+                </dunagan_custom_layout>
+            </updates>
+        </layout>
+    </frontend>
+</config>

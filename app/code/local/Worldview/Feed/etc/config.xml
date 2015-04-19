@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Worldview_Feed>
+            <version>0.0.1</version>
+        </Worldview_Feed>
+    </modules>
+
+    <global>
+        <models>
+            <worldview_feed>
+                <class>Worldview_Feed_Model</class>
+            </worldview_feed>
+        </models>
+
+        <helpers>
+            <worldview_feed>
+                <class>Worldview_Feed_Helper</class>
+            </worldview_feed>
+        </helpers>
+
+        <blocks>
+            <worldview_feed>
+                <class>Worldview_Feed_Block</class>
+            </worldview_feed>
+        </blocks>
+
+        <resources>
+            <worldview_feed_setup>
+                <setup>
+                    <module>Worldview_Feed</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </worldview_feed_setup>
+        </resources>
+    </global>
+
+    <admin>
+        <routers>
+            <worldview_feed>
+                <use>admin</use>
+                <args>
+                    <module>Worldview_Feed</module>
+                    <frontName>worldview_feed</frontName>
+                </args>
+            </worldview_feed>
+        </routers>
+    </admin>
+
+    <default>
+        <worldview>
+            <feed>
+                <process>
+                    <article_retrieval>
+                        <RSS>
+                            <delegates>
+                                <source_loader>worldview_feed/source_loader_by_source_type</source_loader>
+                                <data_retriever>worldview_feed/data_retriever_rss</data_retriever>
+                                <article_persister>worldview_feed/article_persister_base</article_persister>
+                                <process_logger>worldview_feed/logger_article_retrieval_html</process_logger>
+                            </delegates>
+                            <data/>
+                        </RSS>
+                    </article_retrieval>
+                </process>
+            </feed>
+        </worldview>
+    </default>
+</config>

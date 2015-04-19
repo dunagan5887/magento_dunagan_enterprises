@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <worldview>
+            <children>
+                <feeds>
+                    <children>
+                        <process translate="title" module="worldview_feed">
+                            <title>Process Feeds</title>
+                            <sort_order>20</sort_order>
+                            <action>worldview_feed/index/index</action>
+                        </process>
+                    </children>
+                </feeds>
+            </children>
+        </worldview>
+    </menu>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <worldview>
+                        <children>
+                            <feeds>
+                                <children>
+                                    <process translate="title" module="worldview_feed">
+                                        <title>Process Feeds</title>
+                                    </process>
+                                </children>
+                            </feeds>
+                        </children>
+                    </worldview>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

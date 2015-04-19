@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <worldview>
+            <children>
+                <articles translate="title" module="worldview_article">
+                    <title>Articles</title>
+                    <sort_order>10</sort_order>
+                    <children>
+                        <view_articles translate="title" module="worldview_article">
+                            <title>View Articles</title>
+                            <sort_order>10</sort_order>
+                            <action>worldview_article/index/index</action>
+                        </view_articles>
+                    </children>
+                </articles>
+            </children>
+        </worldview>
+    </menu>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <worldview>
+                        <children>
+                            <articles>
+                                <children>
+                                    <view_articles translate="title" module="worldview_article">
+                                        <title>View Articles</title>
+                                    </view_articles>
+                                </children>
+                            </articles>
+                        </children>
+                    </worldview>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
