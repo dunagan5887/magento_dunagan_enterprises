@@ -16,6 +16,18 @@
 
         <reference name="footer">
             <action method="unsetChild"><child>newsletter</child></action>
+            <action method="unsetChild"><child>cms_footer_links_sm</child></action>
+            <action method="unsetChild"><child>footer_links2</child></action>
+        </reference>
+
+        <reference name="footer_links2">
+            <action method="removeLinkByUrl"><url helper="customer/getAccountUrl"/></action>
+        </reference>
+
+        <reference name="footer_links">
+            <action method="removeLinkByUrl"><url helper="catalog/map/getCategoryUrl"/></action>
+            <action method="removeLinkByUrl"><url helper="catalogsearch/getSearchTermUrl"/></action>
+            <action method="removeLinkByUrl"><url helper="catalogsearch/getAdvancedSearchUrl"/></action>
         </reference>
 
         <reference name="cms_footer_links">
