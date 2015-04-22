@@ -1,0 +1,15 @@
+<div class="left-header">
+    <?php if ($this->getIsHomePage()):?>
+        <div class="logo-image">
+            <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo">
+                <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
+            </a>
+        </div>
+        <h2 class="logo-text"><strong>Dunagan</strong><br><strong>Enterprises</strong></h2>
+    <?php else:?>
+        <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo">
+            <strong><?php echo $this->getLogoAlt() ?></strong>
+            <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
+        </a>
+    <?php endif?>
+</div>

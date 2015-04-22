@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <layout>
     <default>
-        <reference name="header">
-            <action method="setTemplate"><file>dunagan/page/html/header.phtml</file></action>
+        <reference name="root">
+            <action method="unsetChild"><child>header</child></action>
         </reference>
 
         <reference name="top.links">
@@ -35,6 +35,12 @@
             <action method="unsetChild"><child>cms_footer_links_sm</child></action>
         </reference>
     </default>
+
+    <page_two_columns_left>
+        <reference name="left">
+            <block type="page/html_header" name="left_header" template="dunagan/page/html/left/header.phtml" />
+        </reference>
+    </page_two_columns_left>
 
     <customer_logged_in>
         <reference name="right">
