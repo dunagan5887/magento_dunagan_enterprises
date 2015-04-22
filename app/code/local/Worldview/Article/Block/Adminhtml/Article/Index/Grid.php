@@ -69,7 +69,8 @@ class Worldview_Article_Block_Adminhtml_Article_Index_Grid
             'width'     => '30',
             'align'     => 'left',
             'index'     => 'is_biased',
-            'type'      => 'select',
+            'type'      => 'text',
+            'renderer' => 'adminhtml/widget_grid_column_renderer_options',
             'options'   => Mage::getModel('eav/entity_attribute_source_boolean')->getOptionArray()
         ));
 
@@ -78,6 +79,6 @@ class Worldview_Article_Block_Adminhtml_Article_Index_Grid
 
     public function getRowUrl($row)
     {
-        return $this->getUrl('*/*/edit', array('channel' => $row->getId()));
+        return $this->getUrl('*/*/edit', array('article' => $row->getId()));
     }
 }

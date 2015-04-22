@@ -66,7 +66,7 @@ class Worldview_Article_IndexController
     }
     public function getFormBlockName()
     {
-        return 'adminhtml_article_form';
+        return 'adminhtml_article';
     }
 
     public function getFormActionsController()
