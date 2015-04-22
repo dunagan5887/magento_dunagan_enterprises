@@ -22,7 +22,9 @@
                 <children>
                     <worldview>
                         <children>
-                            <feeds>
+                            <feeds translate="title" module="worldview_feed">
+                                <title>Feeds</title>
+                                <sort_order>10</sort_order>
                                 <children>
                                     <process translate="title" module="worldview_feed">
                                         <title>Process Feeds</title>

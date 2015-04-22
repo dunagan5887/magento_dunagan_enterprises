@@ -6,4 +6,17 @@
             <sort_order>11</sort_order>
         </worldview>
     </menu>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <worldview  translate="title" module="worldview_base">
+                        <title>Worldview</title>
+                        <sort_order>1000</sort_order>
+                    </worldview>
+                </children>
+            </admin>
+        </resources>
+    </acl>
 </config>
