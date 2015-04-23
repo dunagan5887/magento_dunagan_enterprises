@@ -24,6 +24,12 @@
             <dunagan_custom_layout>
                 <class>Dunagan_CustomLayout_Block</class>
             </dunagan_custom_layout>
+
+            <adminhtml>
+                <rewrite>
+                    <page_menu>Dunagan_CustomLayout_Block_Adminhtml_Page_Menu</page_menu>
+                </rewrite>
+            </adminhtml>
         </blocks>
 
         <resources>
@@ -47,4 +53,14 @@
             </updates>
         </layout>
     </frontend>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <admin_updates>
+                    <file>dunagan/custom_layout.xml</file>
+                </admin_updates>
+            </updates>
+        </layout>
+    </adminhtml>
 </config>

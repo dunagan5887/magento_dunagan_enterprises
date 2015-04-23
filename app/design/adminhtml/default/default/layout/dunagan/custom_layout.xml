@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+        <reference name="root">
+            <action method="setTemplate"><template>dunagan/page.phtml</template></action>
+            <block type="core/template" name="main_window_notices" template="dunagan/page/main_window_notices.phtml"/>
+        </reference>
+
+        <reference name="head">
+            <action method="addCss"><name>dunagan.css</name></action>
+        </reference>
+    </default>
+</layout>
