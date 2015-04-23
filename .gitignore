@@ -1,5 +1,5 @@
 .idea
-app/etc/local.xml*
+app/etc/local.xml
 var/cache
 var/session
 var/locks
