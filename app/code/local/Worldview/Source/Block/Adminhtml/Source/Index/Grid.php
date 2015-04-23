@@ -44,6 +44,17 @@ class Worldview_Source_Block_Adminhtml_Source_Index_Grid
             'type'      => 'text'
         ));
 
+        $this->addColumn('active', array(
+            'header'    => $this->_getTranslationHelper()->__('Active'),
+            'width'     => '30',
+            'align'     => 'left',
+            'index'     => 'active',
+            'type'      => 'text',
+            'renderer'  => 'adminhtml/widget_grid_column_renderer_options',
+            'options'   => Mage::getModel('eav/entity_attribute_source_boolean')->getOptionArray(),
+            'filter'    => 'adminhtml/widget_grid_column_filter_select'
+        ));
+
         return parent::_prepareColumns();
     }
 

@@ -70,8 +70,9 @@ class Worldview_Article_Block_Adminhtml_Article_Index_Grid
             'align'     => 'left',
             'index'     => 'is_biased',
             'type'      => 'text',
-            'renderer' => 'adminhtml/widget_grid_column_renderer_options',
-            'options'   => Mage::getModel('eav/entity_attribute_source_boolean')->getOptionArray()
+            'renderer'  => 'adminhtml/widget_grid_column_renderer_options',
+            'options'   => Mage::getModel('eav/entity_attribute_source_boolean')->getOptionArray(),
+            'filter'    => 'adminhtml/widget_grid_column_filter_select'
         ));
 
         return parent::_prepareColumns();
