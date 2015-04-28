@@ -50,6 +50,10 @@
                 <dunagan_custom_layout>
                     <file>dunagan/custom_layout.xml</file>
                 </dunagan_custom_layout>
+
+                <dunagan_demo_custom_layout>
+                    <file>dunagan_demo/custom_layout.xml</file>
+                </dunagan_demo_custom_layout>
             </updates>
         </layout>
     </frontend>
