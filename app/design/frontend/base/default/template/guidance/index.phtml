@@ -1,0 +1,30 @@
+<?php $letter_to_books_mapping_array = $this->getLetterToBooksMappingArray(); ?>
+
+<span class="guidance_book_index_header">
+
+<?php foreach($this->getCapitalizedAlphabet() as $capital_letter) {?>
+    <span class="guidance_book_index_header_element">
+    <?php if (isset($letter_to_books_mapping_array[$capital_letter]))
+    { ?>
+        <a href="#<?php echo $this->getAnchorJumpLinkName($capital_letter) ?>"><u><?php echo $capital_letter ?></u></a>
+    <?php }
+    else  {
+        echo $capital_letter;
+    } ?>
+    </span>
+<?php } ?>
+
+</span>
+
+<br>
+<br>
+
+<span class="guidance_book_index_list">
+<?php foreach ($letter_to_books_mapping_array as $capital_letter => $book_objects_array) { ?>
+    <a class="guidance_book_index_anchor" name="<?php echo $this->getAnchorJumpLinkName($capital_letter) ?>"><?php echo $capital_letter ?></a>
+    <br>
+    <?php foreach ($book_objects_array as $bookObject) {?>
+        <span class="guidance_book_index_book_link"><a href="<?php echo $this->getViewBookLink($bookObject) ?>"><u><?php echo $bookObject->getTitle() ?></u></a></span><br>
+    <?php }
+} ?>
+</span>

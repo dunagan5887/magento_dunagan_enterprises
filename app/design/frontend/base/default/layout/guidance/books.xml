@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<layout>
+    <guidance_books_index_index>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/guidance/books.css</stylesheet></action>
+        </reference>
+
+        <reference name="content">
+            <block type="guidance_books/index" name="guidance_books_index" template="guidance/index.phtml"/>
+        </reference>
+    </guidance_books_index_index>
+</layout>

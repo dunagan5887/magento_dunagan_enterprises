@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Guidance_Books>
+            <version>0.0.2</version>
+        </Guidance_Books>
+    </modules>
+
+    <global>
+        <models>
+            <guidance_books>
+                <class>Guidance_Books_Model</class>
+                <resourceModel>guidance_books_mysql4</resourceModel>
+            </guidance_books>
+            <guidance_books_mysql4>
+                <class>Guidance_Books_Model_Mysql4</class>
+                <entities>
+                    <books>
+                        <table>books</table>
+                    </books>
+                </entities>
+            </guidance_books_mysql4>
+        </models>
+
+        <helpers>
+            <guidance_books>
+                <class>Guidance_Books_Helper</class>
+            </guidance_books>
+        </helpers>
+
+        <blocks>
+            <guidance_books>
+                <class>Guidance_Books_Block</class>
+            </guidance_books>
+        </blocks>
+
+        <resources>
+            <guidance_books_setup>
+                <setup>
+                    <module>Guidance_Books</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </guidance_books_setup>
+        </resources>
+    </global>
+
+    <frontend>
+        <layout>
+            <updates>
+                <guidance_books>
+                    <file>guidance/books.xml</file>
+                </guidance_books>
+            </updates>
+        </layout>
+
+        <routers>
+            <guidance_books>
+                <use>standard</use>
+                <args>
+                    <module>Guidance_Books</module>
+                    <frontName>guidancebooks</frontName>
+                </args>
+            </guidance_books>
+        </routers>
+    </frontend>
+</config>
