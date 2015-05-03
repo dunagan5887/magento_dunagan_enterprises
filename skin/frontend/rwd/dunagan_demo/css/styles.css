@@ -3411,7 +3411,7 @@ a.skip-link {
   #header-nav {
     display: block;
     /* Force visibility */
-    border-bottom: 1px solid #ededed;
+    border-bottom: 5px solid #00009f;
   }
 }
 /* ============================================ *
@@ -3448,6 +3448,12 @@ a.skip-link {
 
 .nav-primary li.level0 > a {
   text-transform: uppercase;
+    color: #00009f
+}
+
+.nav-primary li.level0 > a:visited {
+    text-transform: uppercase;
+    color: #6E0000
 }
 
 /* ============================================ *
@@ -3514,6 +3520,11 @@ a.skip-link {
     /* Class for js to add briefly to evaluate element positioning. */
     /* Correct menus that will hang off the page (class added by js) */
     /* Level 1+ */
+  /*
+      border-color: #00009f;
+  border-style: ridge;
+  border-width: 5px;
+  */
   }
   .nav-primary a.level0 {
     padding: 0 25px;
