@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dunagan_Io>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Dunagan_Io>
+    </modules>
+</config>

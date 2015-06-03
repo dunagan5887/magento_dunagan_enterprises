@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dunagan_Io>
+            <version>0.0.1</version>
+        </Dunagan_Io>
+    </modules>
+
+    <global>
+        <models>
+            <dunagan_io>
+                <class>Dunagan_Io_Model</class>
+                <resourceModel>dunagan_io_mysql4</resourceModel>
+            </dunagan_io>
+            <dunagan_io_mysql4>
+                <class>Dunagan_Io_Model_Mysql4</class>
+            </dunagan_io_mysql4>
+        </models>
+
+        <helpers>
+            <dunagan_io>
+                <class>Dunagan_Io_Helper</class>
+            </dunagan_io>
+        </helpers>
+
+        <blocks>
+            <dunagan_io>
+                <class>Dunagan_Io_Block</class>
+            </dunagan_io>
+        </blocks>
+
+        <resources>
+            <dunagan_io_setup>
+                <setup>
+                    <module>Dunagan_Io</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dunagan_io_setup>
+        </resources>
+    </global>
+</config>
