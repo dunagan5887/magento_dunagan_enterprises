@@ -5,6 +5,7 @@
  */
 
 abstract class Dunagan_Io_Model_Process_Abstract
+    extends Varien_Object
     implements Dunagan_Io_Model_Process_Interface
 {
     protected $_error_log_file = 'io_process_error';

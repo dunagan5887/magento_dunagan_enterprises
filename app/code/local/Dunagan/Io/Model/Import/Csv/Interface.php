@@ -24,6 +24,7 @@ interface Dunagan_Io_Model_Import_Csv_Interface extends Dunagan_Io_Model_Import_
     public function importDataRow($rowData, $row_num);
 
     // The following methods are OPTIONAL to override for subclasses of abstract class Dunagan_Io_Model_Import_Csv_Abstract
+
     /**
      * Allows for determining if the row is valid to be processed based on the data contained in the row
      * It is expected that this method will throw an exception upon finding a validation error, which will be caught

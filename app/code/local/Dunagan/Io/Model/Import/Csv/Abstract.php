@@ -24,7 +24,7 @@ abstract class Dunagan_Io_Model_Import_Csv_Abstract
 
     protected $_expected_row_size = null;
 
-    protected function _readFile($ioAdapter, $file, $file_path)
+    public function readFile($ioAdapter, $file, $file_path)
     {
         $this->_current_file_being_processed = $file['text'];
         $this->_row_number = 0;
@@ -34,7 +34,7 @@ abstract class Dunagan_Io_Model_Import_Csv_Abstract
 
         $this->_header_row = null;
 
-        if (!$this->_validateHeader($headerRow, $file['text']))
+        if (!$this->validateHeader($headerRow, $file['text']))
         {
             // Reset this->_header_row in case a subclass has set it
             // Method _validateHeader() is expected to have logged any necessary error messaging
@@ -100,7 +100,7 @@ abstract class Dunagan_Io_Model_Import_Csv_Abstract
         $this->importDataRow($rowData, $row_num);
     }
 
-    protected function _validateHeader(array $headerRow, $fileName)
+    public function validateHeader(array $headerRow, $fileName)
     {
         $is_header_valid = true;
 

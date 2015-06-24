@@ -16,6 +16,7 @@ interface Dunagan_Io_Model_Import_Interface extends Dunagan_Io_Model_Process_Int
     public function readFile($ioAdapter, $file, $file_path);
 
     // The following methods are OPTIONAL to override for subclasses of abstract class Dunagan_Io_Model_Import_Abstract
+
     /**
      * The directory to import files from
      *
