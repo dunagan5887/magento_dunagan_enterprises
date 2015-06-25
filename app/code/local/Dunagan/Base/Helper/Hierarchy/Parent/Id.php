@@ -12,7 +12,9 @@ class Dunagan_Base_Helper_Hierarchy_Parent_Id
 
     public function getRootIds()
     {
-        return $this->_parent_id_to_children_ids_mapping[self::ROOT_ID];
+        return isset($this->_parent_id_to_children_ids_mapping[self::ROOT_ID])
+                ? $this->_parent_id_to_children_ids_mapping[self::ROOT_ID]
+                : array();
     }
 
     public function getChildrenOfParentById($parent_id)
