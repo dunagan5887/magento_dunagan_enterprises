@@ -161,7 +161,7 @@ class Dunagan_Base_Helper_Category
                 }
             }
 
-            $categoryResource = Mage::getModel('dls_utility/resource_category');
+            $categoryResource = Mage::getModel('dunagan_base/resource_category');
             $categoryResource->setCategoryProducts($categoryObject);
         }
         catch (Exception $e){
@@ -279,7 +279,7 @@ class Dunagan_Base_Helper_Category
     {
         if (is_null($this->_urlHelper))
         {
-            $this->_urlHelper = Mage::helper('dls_utility/url');
+            $this->_urlHelper = Mage::helper('dunagan_base/url');
         }
 
         return $this->_urlHelper;
