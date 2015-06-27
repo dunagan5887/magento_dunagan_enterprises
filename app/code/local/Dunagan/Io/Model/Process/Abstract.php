@@ -14,8 +14,6 @@ abstract class Dunagan_Io_Model_Process_Abstract
     protected $_transaction_file_extension = '.txt';
     protected $_transaction_filename_prefix = 'transaction_file';
 
-    abstract public function run();
-
     protected function _getIoAdapter()
     {
         if (!$this->hasData('io_adapter'))
