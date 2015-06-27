@@ -6,14 +6,6 @@
 
 interface Dunagan_Io_Model_Process_Interface
 {
-    // The following methods are REQUIRED for all classes implementing this interface
-    /**
-     * This method should execute whatever Import/Export functionality should occur as part of the process
-     *
-     * @return mixed
-     */
-    public function run();
-
     // The following methods are OPTIONAL to override for subclasses of abstract class Dunagan_Io_Model_Process_Abstract
     /**
      * Directory to import files from or export files to

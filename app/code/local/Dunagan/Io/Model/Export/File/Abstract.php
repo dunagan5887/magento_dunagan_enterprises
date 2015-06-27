@@ -12,7 +12,7 @@ abstract class Dunagan_Io_Model_Export_File_Abstract
     protected $_error_log_file = 'io_export_error';
     protected $_transaction_filename_prefix = 'export_file';
     protected $_transaction_file_extension = '.txt';
-    protected $_export_file_should_be_timestamped = true;
+    protected $_export_file_should_be_timestamped = false;
 
     abstract public function getExportDirectory();
 
