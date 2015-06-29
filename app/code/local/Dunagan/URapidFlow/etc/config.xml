@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dunagan_URapidFlow>
+            <version>0.0.1</version>
+        </Dunagan_URapidFlow>
+    </modules>
+
+    <global>
+        <models>
+            <dunagan_urapidflow>
+                <class>Dunagan_URapidFlow_Model</class>
+                <resourceModel>dunagan_urapidflow_mysql4</resourceModel>
+            </dunagan_urapidflow>
+        </models>
+
+        <helpers>
+            <dunagan_urapidflow>
+                <class>Dunagan_URapidFlow_Helper</class>
+            </dunagan_urapidflow>
+        </helpers>
+
+        <blocks>
+            <dunagan_urapidflow>
+                <class>Dunagan_URapidFlow_Block</class>
+            </dunagan_urapidflow>
+        </blocks>
+
+        <resources>
+            <dunagan_urapidflow_setup>
+                <setup>
+                    <module>Dunagan_URapidFlow</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dunagan_urapidflow_setup>
+        </resources>
+    </global>
+</config>
