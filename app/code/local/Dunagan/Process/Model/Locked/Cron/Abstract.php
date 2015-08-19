@@ -12,6 +12,26 @@ abstract class Dunagan_Process_Model_Locked_Cron_Abstract
 
     abstract public function getCronCode();
 
+    abstract public function getParallelThreadCount();
+
+    abstract public function attemptLockForThread($thread_number);
+
+    public function attemptLock()
+    {
+        $thread_count = $this->getParallelThreadCount();
+
+        for($thread_number = 0; $thread_number < $thread_count; $thread_number++)
+        {
+            $lock_successful = $this->attemptLockForThread($thread_number);
+            if ($lock_successful)
+            {
+                return $lock_successful;
+            }
+        }
+
+        return false;
+    }
+
     public function attemptCronExecution()
     {
         if ($this->attemptLock())

@@ -17,11 +17,12 @@ abstract class Dunagan_Process_Model_Locked_File_Cron_Abstract
 
     abstract public function getLockFileName();
 
-    public function attemptLock()
+    public function attemptLockForThread($thread_number)
     {
         $ioAdapter = $this->_getIoAdapter();
         $lock_file_directory = $this->getLockFileDirectory();
         $lock_file_name = $this->getLockFileName();
+        $full_lock_file_name = $lock_file_name . '_' . $thread_number . '.lock';
 
         try
         {
@@ -29,12 +30,12 @@ abstract class Dunagan_Process_Model_Locked_File_Cron_Abstract
         }
         catch(Exception $e)
         {
-            $error_message = sprintf(self::ERROR_EXCEPTION_WHILE_CHANGING_DIRECTORY, $lock_file_directory, $lock_file_name, $e->getMessage());
+            $error_message = sprintf(self::ERROR_EXCEPTION_WHILE_CHANGING_DIRECTORY, $lock_file_directory, $full_lock_file_name, $e->getMessage());
             $this->_logError($error_message);
             return false;
         }
 
-        $lock_file_path = $lock_file_directory . DS . $lock_file_name;
+        $lock_file_path = $lock_file_directory . DS . $full_lock_file_name;
 
         try
         {

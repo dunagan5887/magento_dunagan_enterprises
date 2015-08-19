@@ -19,4 +19,8 @@ interface Dunagan_Process_Model_Locked_Cron_Interface
     public function executeCron();
 
     public function getCronCode();
+
+    public function getParallelThreadCount();
+
+    public function attemptLockForThread($thread_number);
 }
