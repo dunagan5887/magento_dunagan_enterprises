@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dunagan_Process>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Dunagan_Io/>
+            </depends>
+        </Dunagan_Process>
+    </modules>
+</config>
