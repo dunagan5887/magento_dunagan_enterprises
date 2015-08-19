@@ -1,6 +1,7 @@
 .idea
 app/etc/local.xml
 var/cache
+var/debug
 var/session
 var/locks
 var/report
