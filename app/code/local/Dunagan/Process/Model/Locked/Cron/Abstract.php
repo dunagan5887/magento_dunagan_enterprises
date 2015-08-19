@@ -4,9 +4,9 @@ abstract class Dunagan_Process_Model_Locked_Cron_Abstract
     extends Dunagan_Process_Model_Locked_Abstract
     implements Dunagan_Process_Model_Locked_Cron_Interface
 {
-    const ERROR_UNABLE_TO_SECURE_LOCK_FILE = 'Unable to secure the lock for cron process %s. The cron will not run.';
+    const ERROR_UNABLE_TO_SECURE_LOCK_FILE = 'Unable to secure a Lock for cron process %s. The cron will not run.';
     const ERROR_EXECUTING_CRON = 'An uncaught exception occurred while executing cron process %s: %s';
-    const ERROR_RELEASING_LOCK = 'An uncaught exception occurred while attempting to release the lock from cron process %s: %s';
+    const ERROR_RELEASING_LOCK = 'An uncaught exception occurred while attempting to release the Lock from cron process %s: %s';
 
     abstract public function executeCron();
 
