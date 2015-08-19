@@ -16,7 +16,7 @@ interface Dunagan_Process_Model_Locked_Cron_Interface
      *
      * @return mixed
      */
-    public function executeCron();
+    public function executeCron($locked_thread_number);
 
     public function getCronCode();
 
