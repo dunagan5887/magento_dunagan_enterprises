@@ -20,7 +20,7 @@ abstract class Dunagan_Process_Model_Locked_Cron_Abstract
     {
         $thread_count = $this->getParallelThreadCount();
 
-        for($thread_number = 0; $thread_number < $thread_count; $thread_number++)
+        for($thread_number = 1; $thread_number <= $thread_count; $thread_number++)
         {
             $lock_successful = $this->attemptLockForThread($thread_number);
             if ($lock_successful)
