@@ -105,4 +105,26 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task extends Mage_Core_Model_Mysql4_Abst
         $rows_updated = $this->_getWriteAdapter()->update($this->getMainTable(), $update_bind_array, $where_conditions_array);
         return $rows_updated;
     }
+
+    public function deleteAllTasks($code)
+    {
+        $where_condition_array = array('code=?' => $code);
+        $rows_deleted = $this->_getWriteAdapter()->delete($this->getMainTable(), $where_condition_array);
+        return $rows_deleted;
+    }
+
+    protected function _getInsertDataArrayTemplate($code, $object, $method)
+    {
+        return array(
+            'code' => $code,
+            'status' => Dunagan_ProcessQueue_Model_Task::STATUS_PENDING,
+            'object' => $object,
+            'method' => $method
+        );
+    }
+
+    protected function _getInsertColumnsArray()
+    {
+        return array('code', 'status', 'object', 'method', 'serialized_arguments_object');
+    }
 }
