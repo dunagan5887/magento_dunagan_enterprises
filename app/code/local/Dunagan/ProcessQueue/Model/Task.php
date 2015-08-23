@@ -137,4 +137,23 @@ class Dunagan_ProcessQueue_Model_Task
     {
         return $this->getResource()->setTaskAsCompleted($this);
     }
+
+
+    protected function _returnErrorCallbackResult($error_message)
+    {
+        $methodCallbackResultToReturn = Mage::getModel('dunagan_process_queue/task_result');
+        $methodCallbackResultToReturn->setMethodCallbackResult($error_message);
+        $methodCallbackResultToReturn->setTaskStatus(Reverb_ProcessQueue_Model_Task::STATUS_ERROR);
+
+        return $methodCallbackResultToReturn;
+    }
+
+    protected function _returnAbortCallbackResult($error_message)
+    {
+        $methodCallbackResultToReturn = Mage::getModel('dunagan_process_queue/task_result');
+        $methodCallbackResultToReturn->setMethodCallbackResult($error_message);
+        $methodCallbackResultToReturn->setTaskStatus(Reverb_ProcessQueue_Model_Task::STATUS_ABORTED);
+
+        return $methodCallbackResultToReturn;
+    }
 }
