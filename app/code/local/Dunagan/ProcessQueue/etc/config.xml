@@ -18,6 +18,9 @@
                     <task>
                         <table>dunagan_process_queue_task</table>
                     </task>
+                    <task_unique>
+                        <table>dunagan_process_queue_task_unique</table>
+                    </task_unique>
                 </entities>
             </dunagan_process_queue_mysql4>
         </models>

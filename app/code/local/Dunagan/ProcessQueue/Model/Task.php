@@ -143,7 +143,7 @@ class Dunagan_ProcessQueue_Model_Task
     {
         $methodCallbackResultToReturn = Mage::getModel('dunagan_process_queue/task_result');
         $methodCallbackResultToReturn->setMethodCallbackResult($error_message);
-        $methodCallbackResultToReturn->setTaskStatus(Reverb_ProcessQueue_Model_Task::STATUS_ERROR);
+        $methodCallbackResultToReturn->setTaskStatus(Dunagan_ProcessQueue_Model_Task::STATUS_ERROR);
 
         return $methodCallbackResultToReturn;
     }
@@ -152,7 +152,7 @@ class Dunagan_ProcessQueue_Model_Task
     {
         $methodCallbackResultToReturn = Mage::getModel('dunagan_process_queue/task_result');
         $methodCallbackResultToReturn->setMethodCallbackResult($error_message);
-        $methodCallbackResultToReturn->setTaskStatus(Reverb_ProcessQueue_Model_Task::STATUS_ABORTED);
+        $methodCallbackResultToReturn->setTaskStatus(Dunagan_ProcessQueue_Model_Task::STATUS_ABORTED);
 
         return $methodCallbackResultToReturn;
     }

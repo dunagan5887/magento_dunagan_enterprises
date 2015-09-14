@@ -17,7 +17,10 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
     protected $_moduleName = 'dunagan_process_queue';
     protected $_logModel = null;
 
-    // TODO IMPLEMENT BATCH SIZE
+    protected $_task_model_classname = 'dunagan_process_queue/task';
+
+    protected $_batch_size = 2500;
+
     // TODO Create separate database connection for queue task resource Singleton
     public function processQueueTasks($code = null)
     {
@@ -126,9 +129,50 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
         }
     }
 
+    public function getCompletedAndAllQueueTasks($code = null)
+    {
+        $allProcessQueueTaskCollection = $this->_getTaskCollectionModel()
+                                                ->setOrder('last_executed_at', Zend_Db_Select::SQL_DESC);;
+
+        if (!empty($code))
+        {
+            $allProcessQueueTaskCollection->addCodeFilter($code);
+        }
+
+        $all_process_queue_tasks = $allProcessQueueTaskCollection->getItems();
+
+        $completedTasksCollection = $this->_getTaskCollectionModel()
+                                        ->addStatusFilter(Dunagan_ProcessQueue_Model_Task::STATUS_COMPLETE)
+                                        ->setOrder('last_executed_at', Zend_Db_Select::SQL_DESC);
+
+        if (!empty($code))
+        {
+            $completedTasksCollection->addCodeFilter($code);
+        }
+
+        $completed_queue_tasks = $completedTasksCollection->getItems();
+
+        return array($completed_queue_tasks, $all_process_queue_tasks);
+    }
+
+    public function getQueueTasksForProgressScreen($code = null)
+    {
+        $processQueueTaskCollection = $this->_getTaskCollectionModel()
+            ->addOpenForProcessingFilter()
+            ->sortByLeastRecentlyExecuted()
+            ->setPageSize($this->_batch_size);
+
+        if (!empty($code))
+        {
+            $processQueueTaskCollection->addCodeFilter($code);
+        }
+
+        return $processQueueTaskCollection;
+    }
+
     public function getQueueTasksForProcessing($code = null)
     {
-        $processQueueTaskCollection = Mage::getModel('dunagan_process_queue/task')
+        $processQueueTaskCollection = Mage::getModel($this->_task_model_classname)
                                         ->getCollection()
                                         ->addOpenForProcessingFilter()
                                         ->addLastExecutedAtThreshold()
@@ -140,6 +184,11 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
         }
 
         return $processQueueTaskCollection;
+    }
+
+    protected function _getTaskCollectionModel()
+    {
+        return Mage::getModel($this->_task_model_classname)->getCollection();
     }
 
     public function updateLastExecutedAtToCurrentTime(Dunagan_ProcessQueue_Model_Mysql4_Task_Collection $processQueueTaskCollection)
