@@ -22,8 +22,14 @@ class Dunagan_Base_Block_Adminhtml_Widget_Grid
         $grid_id = $controllerAction->getModuleGroupname() . '_' . $grid_path;
 
         $this->setId($grid_id);
-        $this->setUseAjax(false);
+        $this->setUseAjax(true);
         $this->setSaveParametersInSession(true);
+    }
+
+    public function getGridUrl()
+    {
+        $uri_path = $this->getAction()->getUriPathForAction('ajaxGrid');
+        return $this->getUrl($uri_path);
     }
 
     protected function _getTranslationHelper()

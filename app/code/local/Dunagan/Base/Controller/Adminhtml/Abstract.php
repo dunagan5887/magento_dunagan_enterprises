@@ -37,6 +37,28 @@ abstract class Dunagan_Base_Controller_Adminhtml_Abstract
             ->renderLayout();
     }
 
+    /**
+     * This also can be done (and probably should be) via layout.xml
+     *
+        <ACTION_HANDLE>
+            <block type="core/text_list" name="root" output="toHtml">
+                <block type="BLOCK_CLASSNAME" name="BLOCK_LAYOUT_NAME"/>
+            </block>
+        </ACTION_HANDLE>
+     *
+     */
+    public function ajaxGridAction()
+    {
+        $this->loadLayout();
+
+        $rootBlock = $this->getLayout()->createBlock('core/text_list', 'root', array('output' => "toHtml"));
+        $grid_block_classname = $this->getModuleGroupname() . '/' . $this->getIndexBlockName() . '_grid';
+        $gridBlock = $this->getLayout()->createBlock($grid_block_classname, 'ajax.grid');
+        $rootBlock->append($gridBlock, 'ajax.grid');
+
+        $this->renderLayout();
+    }
+
     protected function _setSetupTitle($title)
     {
         try
