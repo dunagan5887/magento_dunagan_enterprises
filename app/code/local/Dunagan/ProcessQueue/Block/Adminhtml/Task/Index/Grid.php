@@ -11,7 +11,6 @@ class Dunagan_ProcessQueue_Block_Adminhtml_Task_Index_Grid
     {
         $this->addColumn('code', array(
             'header'    => $this->_getTranslationHelper()->__('Code'),
-            'width'     => '100',
             'align'     => 'left',
             'index'     => 'code',
             'type'      => 'text'
@@ -41,9 +40,17 @@ class Dunagan_ProcessQueue_Block_Adminhtml_Task_Index_Grid
 
         $this->addColumn('serialized_arguments_object', array(
             'header'    => $this->_getTranslationHelper()->__('Serialized Arguments Object'),
-            'width'     => '300',
+            'width'     => '250',
             'align'     => 'left',
             'index'     => 'serialized_arguments_object',
+            'type'      => 'text'
+        ));
+
+        $this->addColumn('status_message', array(
+            'header'    => $this->_getTranslationHelper()->__('Status Message'),
+            'width'     => '250',
+            'align'     => 'left',
+            'index'     => 'status_message',
             'type'      => 'text'
         ));
 

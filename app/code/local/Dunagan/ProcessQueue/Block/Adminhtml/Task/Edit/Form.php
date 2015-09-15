@@ -18,5 +18,6 @@ class Dunagan_ProcessQueue_Block_Adminhtml_Task_Edit_Form
         $this->_addTextFieldEditableIfNewOnly($fieldset, 'object', 'Object', true);
         $this->_addTextFieldEditableIfNewOnly($fieldset, 'method', 'Method', true);
         $this->_addTextFieldEditableIfNewOnly($fieldset, 'serialized_arguments_object', 'Serialized Arguments Object', false);
+        $this->_addTextFieldEditableIfNewOnly($fieldset, 'status_message', 'Status Message', false);
     }
 }

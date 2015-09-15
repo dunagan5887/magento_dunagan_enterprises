@@ -80,15 +80,14 @@ class Dunagan_ProcessQueue_Model_Task
             $execution_status = self::STATUS_COMPLETE;
         }
 
-        $this->getResource()->setExecutionStatusForTask($execution_status, $this);
+        $status_message = $taskExecutionResult->getTaskStatusMessage();
+        $this->getResource()->setExecutionStatusForTask($execution_status, $this, $status_message);
         // TODO Log error message if $execution_status isn't a valid status
-
-        // TODO Log status messaging for task execution
     }
 
-    public function setTaskAsErrored()
+    public function setTaskAsErrored($error_message = null)
     {
-        return $this->getResource()->setTaskAsErrored($this);
+        return $this->getResource()->setTaskAsErrored($this, $error_message);
     }
 
     protected function _construct()
@@ -138,11 +137,19 @@ class Dunagan_ProcessQueue_Model_Task
         return $this->getResource()->setTaskAsCompleted($this);
     }
 
+    protected function _returnSuccessCallbackResult($success_message)
+    {
+        $methodCallbackResultToReturn = Mage::getModel('dunagan_process_queue/task_result');
+        $methodCallbackResultToReturn->setTaskStatusMessage($success_message);
+        $methodCallbackResultToReturn->setTaskStatus(Dunagan_ProcessQueue_Model_Task::STATUS_COMPLETE);
+
+        return $methodCallbackResultToReturn;
+    }
 
     protected function _returnErrorCallbackResult($error_message)
     {
         $methodCallbackResultToReturn = Mage::getModel('dunagan_process_queue/task_result');
-        $methodCallbackResultToReturn->setMethodCallbackResult($error_message);
+        $methodCallbackResultToReturn->setTaskStatusMessage($error_message);
         $methodCallbackResultToReturn->setTaskStatus(Dunagan_ProcessQueue_Model_Task::STATUS_ERROR);
 
         return $methodCallbackResultToReturn;
@@ -151,7 +158,7 @@ class Dunagan_ProcessQueue_Model_Task
     protected function _returnAbortCallbackResult($error_message)
     {
         $methodCallbackResultToReturn = Mage::getModel('dunagan_process_queue/task_result');
-        $methodCallbackResultToReturn->setMethodCallbackResult($error_message);
+        $methodCallbackResultToReturn->setTaskStatusMessage($error_message);
         $methodCallbackResultToReturn->setTaskStatus(Dunagan_ProcessQueue_Model_Task::STATUS_ABORTED);
 
         return $methodCallbackResultToReturn;
