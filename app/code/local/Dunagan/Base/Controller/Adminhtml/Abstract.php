@@ -100,7 +100,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Abstract
             return false;
         }
 
-        return parent::_isAllowed();
+        return true;
     }
 
     public function getAclPath()
