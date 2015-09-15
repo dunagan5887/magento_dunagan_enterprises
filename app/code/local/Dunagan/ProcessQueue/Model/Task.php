@@ -132,9 +132,9 @@ class Dunagan_ProcessQueue_Model_Task
         return $argumentsObject;
     }
 
-    public function setTaskAsCompleted()
+    public function setTaskAsCompleted($success_message = null)
     {
-        return $this->getResource()->setTaskAsCompleted($this);
+        return $this->getResource()->setTaskAsCompleted($this, $success_message);
     }
 
     protected function _returnSuccessCallbackResult($success_message)

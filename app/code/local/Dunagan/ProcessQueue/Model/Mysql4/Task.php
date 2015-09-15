@@ -81,18 +81,9 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task extends Mage_Core_Model_Mysql4_Abst
         return 0;
     }
 
-    public function setTaskAsCompleted(Dunagan_ProcessQueue_Model_Task_Interface $taskObject)
+    public function setTaskAsCompleted(Dunagan_ProcessQueue_Model_Task_Interface $taskObject, $success_message = null)
     {
-        $task_id = $taskObject->getId();
-        if (empty($task_id))
-        {
-            return false;
-        }
-
-        $update_bind_array = array('status' => Dunagan_ProcessQueue_Model_Task::STATUS_COMPLETE);
-        $where_conditions_array = array('task_id=?' => $task_id);
-        $rows_updated = $this->_getWriteAdapter()->update($this->getMainTable(), $update_bind_array, $where_conditions_array);
-        return $rows_updated;
+        return $this->setExecutionStatusForTask(Dunagan_ProcessQueue_Model_Task::STATUS_COMPLETE, $taskObject, $success_message);
     }
 
     public function setTaskAsErrored(Dunagan_ProcessQueue_Model_Task_Interface $taskObject, $error_message = null)

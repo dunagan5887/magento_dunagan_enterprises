@@ -95,8 +95,17 @@ abstract class Dunagan_Base_Controller_Adminhtml_Abstract
 
     protected function _isAllowed()
     {
-        return Mage::getSingleton('admin/session')
-                    ->isAllowed($this->getControllerActiveMenuPath());
+        if(!Mage::getSingleton('admin/session')->isAllowed($this->getAclPath()))
+        {
+            return false;
+        }
+
+        return parent::_isAllowed();
+    }
+
+    public function getAclPath()
+    {
+        return $this->getControllerActiveMenuPath();
     }
 
     public function getModuleHelper()
