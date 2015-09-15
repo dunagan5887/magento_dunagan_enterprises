@@ -26,12 +26,30 @@ class Dunagan_Base_Block_Adminhtml_Widget_Grid
         $this->setSaveParametersInSession(true);
     }
 
+    protected function _prepareCollection()
+    {
+        $object_classname = $this->getAction()->getObjectClassname();
+
+        $collection = Mage::getModel($object_classname)->getCollection();
+        $this->setCollection($collection);
+        return parent::_prepareCollection();
+    }
+
+    public function getRowUrl($row)
+    {
+        $object_param_name = $this->getAction()->getObjectParamName();
+        return $this->getUrl('*/*/edit', array($object_param_name => $row->getId()));
+    }
+
     public function getGridUrl()
     {
         $uri_path = $this->getAction()->getUriPathForAction('ajaxGrid');
         return $this->getUrl($uri_path);
     }
 
+    /**
+     * @return Mage_Core_Helper_Abstract
+     */
     protected function _getTranslationHelper()
     {
         if (is_null($this->_translationHelper))

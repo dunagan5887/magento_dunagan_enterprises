@@ -85,7 +85,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
         else
         {
             // An object's id was passed in, but no existing entity with that id was found
-            $object_classname = $this->_getObjectClassname();
+            $object_classname = $this->getObjectClassname();
             $error_message = sprintf(self::ERROR_INVALID_OBJECT_ID, $object_classname, $object_id);
             $this->_getSession()->addError(Mage::helper($this->getModuleGroupname())->__($error_message));
             $this->_redirect('*/*/index');
@@ -100,7 +100,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
         if ($object_id && !is_object($objectToSave))
         {
             // Object Id was provided but an object was not returned from _initializeObjectFromParam()
-            $error_message = sprintf(self::ERROR_INVALID_OBJECT_ID, $this->_getObjectClassname(), $object_id);
+            $error_message = sprintf(self::ERROR_INVALID_OBJECT_ID, $this->getObjectClassname(), $object_id);
             $error_message .= ' ' . $this->getObjectDescription() . ' update will not occur.';
             $this->_getSession()->addError(Mage::helper($this->getModuleGroupname())->__($error_message));
             $this->_redirect($this->getFullBackControllerActionPath());
@@ -117,7 +117,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
                 if (!is_object($objectToSave))
                 {
                     // User is trying to create a new object
-                    $object_classname = $this->_getObjectClassname();
+                    $object_classname = $this->getObjectClassname();
                     $objectToSave = Mage::getModel($object_classname);
                     $objectToSave->setCreatedAt(Mage::getModel('core/date')->date());
 
@@ -179,7 +179,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
         $object_id = $this->getRequest()->getParam($this->getObjectParamName());
         if ($object_id)
         {
-            $object_classname = $this->_getObjectClassname();
+            $object_classname = $this->getObjectClassname();
             $objectToInitialize = Mage::getModel($object_classname)->load($object_id);
             if (is_object($objectToInitialize) && $objectToInitialize->getId())
             {
@@ -190,7 +190,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
         return false;
     }
 
-    protected function _getObjectClassname()
+    public function getObjectClassname()
     {
         $objects_module_instance = $this->getModuleInstance();
         $objects_module = $this->getModuleGroupname();

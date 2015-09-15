@@ -49,6 +49,18 @@
         </resources>
     </global>
 
+    <admin>
+        <routers>
+            <dunagan_process_queue>
+                <use>admin</use>
+                <args>
+                    <module>Dunagan_ProcessQueue</module>
+                    <frontName>dunagan_process_queue</frontName>
+                </args>
+            </dunagan_process_queue>
+        </routers>
+    </admin>
+
     <crontab>
         <jobs>
             <dunagan_process_queue_process_tasks>

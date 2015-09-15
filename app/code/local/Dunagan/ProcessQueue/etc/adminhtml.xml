@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <dunagan_process_queue translate="title">
+                                <title>Dunagan Process Queue Tasks</title>
+                                <sort_order>14</sort_order>
+                            </dunagan_process_queue>
+                            <dunagan_process_queue_unique translate="title">
+                                <title>Dunagan Unique Process Queue Tasks</title>
+                                <sort_order>15</sort_order>
+                            </dunagan_process_queue_unique>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <menu>
+        <system>
+            <children>
+                <dunagan_process_queue translate="title">
+                    <title>Process Queue Tasks</title>
+                    <action>dunagan_process_queue/adminhtml_index</action>
+                    <sort_order>14</sort_order>
+                </dunagan_process_queue>
+                <dunagan_process_queue_unique translate="title">
+                    <title>Unique Process Queue Tasks</title>
+                    <action>dunagan_process_queue/adminhtml_unique_index</action>
+                    <sort_order>15</sort_order>
+                </dunagan_process_queue_unique>
+            </children>
+        </system>
+    </menu>
+</config>
