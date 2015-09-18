@@ -23,4 +23,24 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task_Unique
     {
         return array('code', 'unique_id', 'status', 'object', 'method', 'serialized_arguments_object');
     }
+
+    /**
+     * This method intended to be used to check if a row has already been created for the unique_id
+     *
+     * @param $unique_id
+     */
+    public function getPrimaryKeyByUniqueId($unique_id)
+    {
+        $table_name = $this->getMainTable();
+        $readConnection = $this->getReadConnection();
+
+        $select = $readConnection
+                    ->select()
+                    ->from($table_name, array('task_id'))
+                    ->where('unique_id = ?', $unique_id);
+
+        $unique_task_primary_key = $readConnection->fetchOne($select);
+
+        return $unique_task_primary_key;
+    }
 }
