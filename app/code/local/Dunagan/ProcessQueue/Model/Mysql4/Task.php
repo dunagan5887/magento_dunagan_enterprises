@@ -46,9 +46,10 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task extends Mage_Core_Model_Mysql4_Abst
         // First, attempt to update the row based on id and status. If no rows are updated, another thread has already
         //  begun processing this row. Also we want to do this outside of any transactions so that we know other mysql
         //  connections will see that this row is already processing
-
         $update_bind_array = array('status' => Dunagan_ProcessQueue_Model_Task::STATUS_PROCESSING,
+                                    'status_message' => null,
                                     'last_executed_at' => $current_gmt_datetime);
+
         $where_conditions_array = array('task_id=?' => $task_id, 'status=?' => $current_status);
 
         $rows_updated = $this->_getWriteAdapter()->update($this->getMainTable(), $update_bind_array, $where_conditions_array);
