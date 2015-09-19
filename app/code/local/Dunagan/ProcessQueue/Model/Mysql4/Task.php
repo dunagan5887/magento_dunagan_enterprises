@@ -12,6 +12,12 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task extends Mage_Core_Model_Mysql4_Abst
         $this->_init('dunagan_process_queue/task','task_id');
     }
 
+    /**
+     * Additional safeguard to ensure that only one execution thread is processing a given task queue object
+     *
+     * @param Dunagan_ProcessQueue_Model_Task_Interface $taskObject
+     * @return string
+     */
     public function selectForUpdate(Dunagan_ProcessQueue_Model_Task_Interface $taskObject)
     {
         $task_id = $taskObject->getId();
@@ -41,6 +47,11 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task extends Mage_Core_Model_Mysql4_Abst
         }
         // Status here can be PENDING or ERROR
         $current_status = $taskObject->getStatus();
+        if (Dunagan_ProcessQueue_Model_Task::STATUS_PROCESSING == $current_status)
+        {
+            // Assume another execution thread is actively processing this task
+            return false;
+        }
         $current_gmt_datetime = Mage::getSingleton('core/date')->gmtDate();
 
         // First, attempt to update the row based on id and status. If no rows are updated, another thread has already
