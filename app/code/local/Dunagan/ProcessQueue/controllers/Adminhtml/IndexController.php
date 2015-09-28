@@ -8,6 +8,8 @@ class Dunagan_ProcessQueue_Adminhtml_IndexController
     extends Dunagan_Base_Controller_Adminhtml_Form_Abstract
     implements Dunagan_Base_Controller_Adminhtml_Form_Interface
 {
+    const ERROR_UPDATE_STATUS_UNALLOWED = 'You do not have authorization to update the status for this task';
+
     /**
      * Allow Queue Tasks to be created via these forms
      *
@@ -27,10 +29,39 @@ class Dunagan_ProcessQueue_Adminhtml_IndexController
         $new_status = isset($posted_object_data['status']) ? $posted_object_data['status'] : null;
         if (!is_null($new_status))
         {
+            if (!$this->canAdminUpdateStatus())
+            {
+                $error_message = sprintf(self::ERROR_UPDATE_STATUS_UNALLOWED);
+                Mage::getSingleton('adminhtml/session')->addError($this->__($error_message));
+                $exception = new Dunagan_Base_Controller_Varien_Exception($error_message);
+                $exception->prepareRedirect('*/*/index');
+                throw $exception;
+            }
             $objectToUpdate->setStatus($new_status);
         }
 
         return $objectToUpdate;
+    }
+
+    /**
+     * This method expected to be overwritten
+     *
+     * @return bool
+     */
+    public function canAdminUpdateStatus()
+    {
+        $update_status_acl_path  = $this->getUpdateStatusACLPath();
+        if (!is_null($update_status_acl_path))
+        {
+            return Mage::getSingleton('admin/session')->isAllowed($update_status_acl_path);
+        }
+
+        return $this->_isAllowed();
+    }
+
+    public function getUpdateStatusACLPath()
+    {
+        return null;
     }
 
     public function getModuleGroupname()
