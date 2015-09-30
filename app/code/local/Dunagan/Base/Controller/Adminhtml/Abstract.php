@@ -33,7 +33,9 @@ abstract class Dunagan_Base_Controller_Adminhtml_Abstract
             ->_setSetupTitle(Mage::helper($module_groupname)->__($module_description))
             ->_addBreadcrumb()
             ->_addBreadcrumb(Mage::helper($module_groupname)->__($module_description), Mage::helper($module_groupname)->__($module_description))
+            ->loadBlocksBeforeGrid()
             ->_addContent($this->getLayout()->createBlock($module_block_classname))
+            ->loadBlocksAfterGrid()
             ->renderLayout();
     }
 
@@ -101,6 +103,21 @@ abstract class Dunagan_Base_Controller_Adminhtml_Abstract
         }
 
         return true;
+    }
+
+    public function loadBlocksBeforeGrid()
+    {
+        return $this;
+    }
+
+    public function loadBlocksAfterGrid()
+    {
+        return $this;
+    }
+
+    public function getCompleteClassnameBySuffix($classname_suffix)
+    {
+        return $this->getModuleGroupname() . '/' . $classname_suffix;
     }
 
     public function getAclPath()

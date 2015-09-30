@@ -88,9 +88,22 @@ class Dunagan_ProcessQueue_Adminhtml_IndexController
         return $objectToUpdate;
     }
 
+    public function loadBlocksBeforeGrid()
+    {
+        $task_index_block_classname = $this->getCompleteClassnameBySuffix($this->getHeaderBlockName());
+        $this->_addContent($this->getLayout()->createBlock($task_index_block_classname));
+
+        return $this;
+    }
+
     public function getQueueTaskProcessor()
     {
-        return Mage::helper('dunagan _process_queue/task_processor');
+        return Mage::helper('dunagan_process_queue/task_processor');
+    }
+
+    public function getHeaderBlockName()
+    {
+        return 'adminhtml_index';
     }
 
     /**

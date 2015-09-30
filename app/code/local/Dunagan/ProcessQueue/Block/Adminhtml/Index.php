@@ -4,11 +4,9 @@
  * Created: 9/25/15
  */
 
-abstract class Dunagan_ProcessQueue_Block_Adminhtml_Index
+class Dunagan_ProcessQueue_Block_Adminhtml_Index
     extends Mage_Adminhtml_Block_Widget_Container
 {
-    abstract public function getTaskCodeToFilterBy();
-
     protected $_outstandingTasksCollection = null;
     protected $_completedAndAllQueueTasks = null;
 
@@ -29,7 +27,7 @@ abstract class Dunagan_ProcessQueue_Block_Adminhtml_Index
     {
         $this->_setHeaderText();
 
-        $this->_objectId = 'dunagan_process_queue_task_index_container';
+        $this->_objectId = 'dunagan_process_queue_index_container';
 
         parent::__construct();
 
@@ -115,6 +113,11 @@ abstract class Dunagan_ProcessQueue_Block_Adminhtml_Index
     {
         $outstandingTasksCollection = $this->_getOutstandingTasksCollection();
         return ($outstandingTasksCollection->count() > 0);
+    }
+
+    public function getTaskCodeToFilterBy()
+    {
+        return null;
     }
 
     protected function _getCompletedAndAllQueueTasks()

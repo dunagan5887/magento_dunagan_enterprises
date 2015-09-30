@@ -11,7 +11,12 @@ class Dunagan_ProcessQueue_Adminhtml_Unique_IndexController
 {
     public function getQueueTaskProcessor()
     {
-        return Mage::helper('dunagan _process_queue/task_processor_unique');
+        return Mage::helper('dunagan_process_queue/task_processor_unique');
+    }
+
+    public function getHeaderBlockName()
+    {
+        return 'adminhtml_unique_index';
     }
 
     public function getControllerActiveMenuPath()

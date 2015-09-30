@@ -4,7 +4,7 @@
  * Created: 9/25/15
  */
 
-abstract class Dunagan_ProcessQueue_Block_Adminhtml_Unique_Index
+class Dunagan_ProcessQueue_Block_Adminhtml_Unique_Index
     extends Dunagan_ProcessQueue_Block_Adminhtml_Index
 {
     protected function _getTaskProcessorHelper()

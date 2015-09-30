@@ -14,7 +14,7 @@ class Dunagan_ProcessQueue_Block_Adminhtml_Task_Index_Grid
             'width'     => '50px',
             'type'      => 'action',
             'getter'    => 'getId',
-            'renderer'  => 'dunagan _process_queue/adminhtml_widget_grid_column_renderer_action',
+            'renderer'  => 'dunagan_process_queue/adminhtml_widget_grid_column_renderer_action',
             'filter'    => false,
             'sortable'  => false
         ));
@@ -76,7 +76,7 @@ class Dunagan_ProcessQueue_Block_Adminhtml_Task_Index_Grid
             'align'     => 'left',
             'index'     => 'last_executed_at',
             'type'      => 'datetime',
-            'renderer'  => 'dunagan _base/adminhtml_widget_grid_column_renderer_datetime',
+            'renderer'  => 'dunagan_base/adminhtml_widget_grid_column_renderer_datetime',
         ));
 
         return parent::_prepareColumns();
