@@ -9,6 +9,11 @@ class Dunagan_ProcessQueue_Adminhtml_Unique_IndexController
     extends Dunagan_ProcessQueue_Adminhtml_IndexController
     implements Dunagan_Base_Controller_Adminhtml_Form_Interface
 {
+    public function getQueueTaskProcessor()
+    {
+        return Mage::helper('dunagan _process_queue/task_processor_unique');
+    }
+
     public function getControllerActiveMenuPath()
     {
         return 'system/dunagan_process_queue_unique';

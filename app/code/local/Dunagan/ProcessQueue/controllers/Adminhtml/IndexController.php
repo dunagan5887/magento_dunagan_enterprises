@@ -8,7 +8,52 @@ class Dunagan_ProcessQueue_Adminhtml_IndexController
     extends Dunagan_Base_Controller_Adminhtml_Form_Abstract
     implements Dunagan_Base_Controller_Adminhtml_Form_Interface
 {
+    const EXCEPTION_LOAD_TASK = 'An exception occurred while attempting to load the queued task with id %s to manually act on the task: %s';
+    const EXCEPTION_ACT_ON_TASK = 'An error occurred while acting on the task with id %s: %s';
+    const GENERIC_ADMIN_FACING_ERROR_MESSAGE = 'An error occurred with your request. Please try again.';
     const ERROR_UPDATE_STATUS_UNALLOWED = 'You do not have authorization to update the status for this task';
+    const NOTICE_TASK_ACTION = 'The attempt to %s the process queue task with id %s has completed.';
+
+    public function actOnTaskAction()
+    {
+        $task_id = $this->getRequest()->getParam($this->getObjectParamName());
+        try
+        {
+            $queueTask = Mage::getModel($this->getObjectClassname())->load($task_id);
+            if ((!is_object($queueTask)) || (!$queueTask->getId()))
+            {
+                throw new Exception('An invalid Task Id was passed to the Process Queue Controller: ' . $task_id);
+            }
+        }
+        catch(Exception $e)
+        {
+            $error_message = sprintf(self::EXCEPTION_LOAD_TASK, $task_id, $e->getMessage());
+            Mage::log($error_message);
+            Mage::getSingleton('adminhtml/session')->addError($this->__(self::GENERIC_ADMIN_FACING_ERROR_MESSAGE));
+            $exception = new Dunagan_Base_Controller_Varien_Exception($error_message);
+            $exception->prepareRedirect('*/*/index');
+            throw $exception;
+        }
+
+        try
+        {
+            $this->getQueueTaskProcessor()->processQueueTask($queueTask);
+        }
+        catch(Exception $e)
+        {
+            $error_message = sprintf(self::EXCEPTION_ACT_ON_TASK, $task_id, $e->getMessage());
+            Mage::log($error_message);
+            Mage::getSingleton('adminhtml/session')->addError($this->__($error_message));
+            $exception = new Dunagan_Base_Controller_Varien_Exception($error_message);
+            $exception->prepareRedirect('*/*/index');
+            throw $exception;
+        }
+
+        $action_text = $queueTask->getActionText();
+        $notice_message = sprintf(self::NOTICE_TASK_ACTION, $action_text, $task_id);
+        Mage::getSingleton('adminhtml/session')->addNotice($this->__($notice_message));
+        $this->_redirect('*/*/index');
+    }
 
     /**
      * Allow Queue Tasks to be created via these forms
@@ -41,6 +86,11 @@ class Dunagan_ProcessQueue_Adminhtml_IndexController
         }
 
         return $objectToUpdate;
+    }
+
+    public function getQueueTaskProcessor()
+    {
+        return Mage::helper('dunagan _process_queue/task_processor');
     }
 
     /**

@@ -100,6 +100,27 @@ class Dunagan_ProcessQueue_Model_Task
         return in_array($status, $this->_valid_statuses);
     }
 
+    public function getActionText()
+    {
+        $status = $this->getStatus();
+        if (!$this->isStatusValid($status))
+        {
+            return '';
+        }
+
+        switch($status)
+        {
+            case self::STATUS_ERROR:
+                return 'Retry';
+            case self::STATUS_PENDING:
+                return 'Execute';
+            default:
+                return '';
+        }
+
+        return '';
+    }
+
     protected function _beforeSave()
     {
         $status = $this->getStatus();

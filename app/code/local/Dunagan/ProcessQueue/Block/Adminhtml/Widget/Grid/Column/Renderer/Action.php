@@ -21,7 +21,8 @@ class Dunagan_ProcessQueue_Block_Adminhtml_Widget_Grid_Column_Renderer_Action
         $action_array['confirm'] = sprintf(self::CONFIRM_TEMPLATE, $task_action_text);
 
         $action_url = $this->getAction()->getUriPathForAction('actOnTask');
-        $action_url = $this->getUrl($action_url, array('task_id' => $row->getId()));
+        $param_name = $this->getAction()->getObjectParamName();
+        $action_url = $this->getUrl($action_url, array($param_name => $row->getId()));
         $action_array['url'] = $action_url;
 
         return $this->_toLinkHtml($action_array, $row);

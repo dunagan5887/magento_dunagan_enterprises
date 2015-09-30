@@ -9,6 +9,16 @@ class Dunagan_ProcessQueue_Block_Adminhtml_Task_Index_Grid
 {
     protected function _prepareColumns()
     {
+        $this->addColumn('action', array(
+            'header'    => $this->_getTranslationHelper()->__('Action'),
+            'width'     => '50px',
+            'type'      => 'action',
+            'getter'    => 'getId',
+            'renderer'  => 'dunagan _process_queue/adminhtml_widget_grid_column_renderer_action',
+            'filter'    => false,
+            'sortable'  => false
+        ));
+
         $this->addColumn('code', array(
             'header'    => $this->_getTranslationHelper()->__('Code'),
             'align'     => 'left',
@@ -65,7 +75,8 @@ class Dunagan_ProcessQueue_Block_Adminhtml_Task_Index_Grid
             'header'    => $this->_getTranslationHelper()->__('Last Executed At'),
             'align'     => 'left',
             'index'     => 'last_executed_at',
-            'type'      => 'datetime'
+            'type'      => 'datetime',
+            'renderer'  => 'dunagan _base/adminhtml_widget_grid_column_renderer_datetime',
         ));
 
         return parent::_prepareColumns();
