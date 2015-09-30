@@ -33,7 +33,7 @@ class Dunagan_ProcessQueue_Block_Adminhtml_Index
 
         $this->_controller = $this->getAction()->getIndexBlockName();
 
-        $this->setTemplate('dunagan/process_queue/task/index/container.phtml');
+        $this->setTemplate('dunagan/process_queue/index/container.phtml');
 
         $expedite_tasks_button = array(
             'action_url' => $this->_getExpediteTasksButtonActionUrl(),
