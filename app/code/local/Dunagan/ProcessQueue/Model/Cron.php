@@ -14,6 +14,7 @@ class Dunagan_ProcessQueue_Model_Cron
         try
         {
             Mage::helper('dunagan_process_queue/task_processor')->processQueueTasks();
+            Mage::helper('dunagan_process_queue/task_processor_unique')->processQueueTasks();
         }
         catch(Exception $e)
         {

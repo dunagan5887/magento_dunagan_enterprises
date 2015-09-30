@@ -112,6 +112,11 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task extends Mage_Core_Model_Mysql4_Abst
         return $rows_updated;
     }
 
+    public function insertTaskIntoQueue($insert_data_array)
+    {
+        return $this->_getWriteAdapter()->insert($this->getMainTable(), $insert_data_array);
+    }
+
     public function deleteAllTasks($code)
     {
         $where_condition_array = array('code=?' => $code);
