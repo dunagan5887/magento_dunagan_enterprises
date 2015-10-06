@@ -159,8 +159,7 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
     {
         $processQueueTaskCollection = $this->_getTaskCollectionModel()
             ->addOpenForProcessingFilter()
-            ->sortByLeastRecentlyExecuted()
-            ->setPageSize($this->_batch_size);
+            ->sortByLeastRecentlyExecuted();
 
         if (!empty($code))
         {
@@ -176,7 +175,8 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
                                         ->getCollection()
                                         ->addOpenForProcessingFilter()
                                         ->addLastExecutedAtThreshold()
-                                        ->sortByLeastRecentlyExecuted();
+                                        ->sortByLeastRecentlyExecuted()
+                                        ->setPageSize($this->_batch_size);
 
         if (!empty($code))
         {
