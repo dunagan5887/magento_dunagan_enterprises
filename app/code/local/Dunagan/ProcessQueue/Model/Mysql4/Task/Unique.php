@@ -12,6 +12,20 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task_Unique
         $this->_init('dunagan_process_queue/task_unique', 'task_id');
     }
 
+    /**
+     * Publicly scoped accessor for the protected method
+     *
+     * @param $code
+     * @param $object
+     * @param $method
+     * @param $unique_id
+     * @return array
+     */
+    public function getUniqueInsertDataArrayTemplate($code, $object, $method, $unique_id)
+    {
+        return $this->_getUniqueInsertDataArrayTemplate($code, $object, $method, $unique_id);
+    }
+
     protected function _getUniqueInsertDataArrayTemplate($code, $object, $method, $unique_id)
     {
         $insert_data_array_template = parent::_getInsertDataArrayTemplate($code, $object, $method);

@@ -13,11 +13,14 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
     const EXCEPTION_EXECUTING_TASK = 'An uncaught exception occurred while executing task for queue task object with id %s: %s';
     const EXCEPTION_ACTING_ON_TASK_RESULT = 'An exception occurred while acting on the task result for task with id %s: %s';
     const EXCEPTION_COMMITTING_TRANSACTION = 'An uncaught exception occurred when attempting to commit the transaction for process queue object with id %s: %s';
+    const EXCEPTION_UPDATING_LAST_EXECUTED_FOR_PRIOR_PROCESSING_TASK = 'An exception occurred while attempting to update the last_executed_at timestamp and clear the status message for the task with id %s: %s';
 
     protected $_moduleName = 'dunagan_process_queue';
     protected $_logModel = null;
+    protected $_taskResourceSingleton = null;
 
     protected $_task_model_classname = 'dunagan_process_queue/task';
+    protected $_task_resource_classname = 'dunagan_process_queue/task';
 
     protected $_batch_size = 2500;
 
@@ -46,23 +49,43 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
      *  - Commits the database transaction
      *
      * @param Dunagan_ProcessQueue_Model_Task_Interface $processQueueTaskObject
+     * @param boolean $row_has_already_been_set_as_processing - Has this task object already been set as processing?
+     *                                                              This typically denotes that whatever process created
+     *                                                              the task object wants to ensure that it is also the
+     *                                                              process which executes the task
      */
-    public function processQueueTask(Dunagan_ProcessQueue_Model_Task_Interface $processQueueTaskObject)
+    public function processQueueTask(Dunagan_ProcessQueue_Model_Task_Interface $processQueueTaskObject,
+                                        $row_has_already_been_set_as_processing = false)
     {
-        try
+        if (!$row_has_already_been_set_as_processing)
         {
-            $able_to_lock_for_processing = $processQueueTaskObject->attemptUpdatingRowAsProcessing();
-            if (!$able_to_lock_for_processing)
-            {
-                // Assume another thread of execution is already processing this task
+            try {
+                $able_to_lock_for_processing = $processQueueTaskObject->attemptUpdatingRowAsProcessing();
+                if (!$able_to_lock_for_processing) {
+                    // Assume another thread of execution is already processing this task
+                    return;
+                }
+            } catch (Exception $e) {
+                $error_message = $this->__(self::EXCEPTION_UPDATE_AS_PROCESSING, $processQueueTaskObject->getId(), $e->getMessage());
+                $this->_logError($error_message);
                 return;
             }
         }
-        catch(Exception $e)
+        else
         {
-            $error_message = $this->__(self::EXCEPTION_UPDATE_AS_PROCESSING, $processQueueTaskObject->getId(), $e->getMessage());
-            $this->_logError($error_message);
-            return;
+            // Don't attempt to update the status as PROCESSING, but set the task last executed at time, as well as
+            //      clear out the existing status message
+            $task_id = $processQueueTaskObject->getId();
+            try
+            {
+                $this->_getTaskResourceSingleton()->updateLastExecutedAtToCurrentTime(array($task_id), true);
+            }
+            catch(Exception $e)
+            {
+                $error_message = $this->__(self::EXCEPTION_UPDATING_LAST_EXECUTED_FOR_PRIOR_PROCESSING_TASK, $task_id, $e->getMessage());
+                $this->_logError($error_message);
+                // Do not interrupt processing of the task due to an exception thrown here
+            }
         }
 
         // At this point, start transaction and lock row for update to ensure exclusive access
@@ -127,6 +150,28 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
             $error_message = $this->__(self::EXCEPTION_COMMITTING_TRANSACTION, $processQueueTaskObject->getId(), $e->getMessage());
             $this->_logError($error_message);
         }
+    }
+
+    /**
+     * @param string $code - The task's process code
+     * @param string $object - Class of the object to call the task callback method on
+     * @param string $method - The callback method to be called
+     * @param stdClass $argumentsObject - Object containing the arguments for the task callback
+     * @return Dunagan_ProcessQueue_Model_Task
+     */
+    public function createQueueTaskInProcessingState($code, $object, $method, $argumentsObject)
+    {
+        // Construct the data array for the queue Task
+        $insert_data_array_template = $this->_getTaskResourceSingleton()
+                                            ->getInsertDataArrayTemplate($code, $object, $method);
+        $insert_data_array_template['serialized_arguments_object'] = $argumentsObject;
+        // Create the task model and initialize the fields
+        $taskObject = Mage::getModel($this->_task_model_classname)->setData($insert_data_array_template);
+        // Set the status as PROCESSING so that there is no race condition with the crontab picking up the task
+        //      since the calling block wants to process the task immediately
+        $taskObject->setStatus(Dunagan_ProcessQueue_Model_Task::STATUS_PROCESSING);
+        $taskObject->save();
+        return $taskObject;
     }
 
     public function getCompletedAndAllQueueTasks($code = null)
@@ -201,6 +246,21 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
         }
         $rows_updated = $processQueueTaskCollection->getResource()->updateLastExecutedAtToCurrentTime($task_ids);
         return $rows_updated;
+    }
+
+    /**
+     * Accessor for the Task Resource Model
+     *
+     * @return Dunagan_ProcessQueue_Model_Mysql4_Task
+     */
+    protected function _getTaskResourceSingleton()
+    {
+        if (is_null($this->_taskResourceSingleton))
+        {
+            $this->_taskResourceSingleton = Mage::getResourceSingleton($this->_task_resource_classname);
+        }
+
+        return $this->_taskResourceSingleton;
     }
 
     protected function _logError($error_message)

@@ -63,7 +63,7 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task extends Mage_Core_Model_Mysql4_Abst
 
         $where_conditions_array = array('task_id=?' => $task_id,
                                         'status=?' => $current_status,
-                                        // As an additional safety measure, don't updates any rows already in processing state
+                                        // As an additional safety measure, don't update any rows already in processing state
                                         'status<>?', Dunagan_ProcessQueue_Model_Task::STATUS_PROCESSING);
 
         $rows_updated = $this->_getWriteAdapter()->update($this->getMainTable(), $update_bind_array, $where_conditions_array);
@@ -106,10 +106,14 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task extends Mage_Core_Model_Mysql4_Abst
         return $this->setExecutionStatusForTask(Dunagan_ProcessQueue_Model_Task::STATUS_ERROR, $taskObject, $error_message);
     }
 
-    public function updateLastExecutedAtToCurrentTime(array $task_ids)
+    public function updateLastExecutedAtToCurrentTime(array $task_ids, $clear_status_message = false)
     {
         $current_gmt_datetime = Mage::getSingleton('core/date')->gmtDate();
         $update_bind_array = array('last_executed_at' => $current_gmt_datetime);
+        if ($clear_status_message)
+        {
+            $update_bind_array['status_message'] = '';
+        }
         $where_conditions_array = array('task_id IN (?)' => $task_ids);
         $rows_updated = $this->_getWriteAdapter()->update($this->getMainTable(), $update_bind_array, $where_conditions_array);
         return $rows_updated;
@@ -118,6 +122,17 @@ class Dunagan_ProcessQueue_Model_Mysql4_Task extends Mage_Core_Model_Mysql4_Abst
     public function insertTaskIntoQueue($insert_data_array)
     {
         return $this->_getWriteAdapter()->insert($this->getMainTable(), $insert_data_array);
+    }
+
+    public function insertTaskIntoQueueAsProcessing($insert_data_array)
+    {
+        $insert_data_array['status'] = Dunagan_ProcessQueue_Model_Task::STATUS_PROCESSING;
+        return $this->_getWriteAdapter()->insert($this->getMainTable(), $insert_data_array);
+    }
+
+    public function getInsertDataArrayTemplate($code, $object, $method)
+    {
+        return $this->_getInsertDataArrayTemplate($code, $object, $method);
     }
 
     public function deleteAllTasks($code)
