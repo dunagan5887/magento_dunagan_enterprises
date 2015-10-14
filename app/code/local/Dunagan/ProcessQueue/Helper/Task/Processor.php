@@ -53,6 +53,13 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
      *                                                              This typically denotes that whatever process created
      *                                                              the task object wants to ensure that it is also the
      *                                                              process which executes the task
+     * @return Dunagan_ProcessQueue_Model_Task_Result_Interface|null - Returns an object implementing interface
+     *                                                                  Dunagan_ProcessQueue_Model_Task_Result_Interface
+     *                                                                  if execution did not throw an uncaught exception
+     *                                                                Returns null if the task was unable to be selected
+     *                                                                  for processing (another thread has likely already
+     *                                                                  begun processing the task) or if an uncaught
+     *                                                                  exception was thrown
      */
     public function processQueueTask(Dunagan_ProcessQueue_Model_Task_Interface $processQueueTaskObject,
                                         $row_has_already_been_set_as_processing = false)
@@ -63,12 +70,12 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
                 $able_to_lock_for_processing = $processQueueTaskObject->attemptUpdatingRowAsProcessing();
                 if (!$able_to_lock_for_processing) {
                     // Assume another thread of execution is already processing this task
-                    return;
+                    return null;
                 }
             } catch (Exception $e) {
                 $error_message = $this->__(self::EXCEPTION_UPDATE_AS_PROCESSING, $processQueueTaskObject->getId(), $e->getMessage());
                 $this->_logError($error_message);
-                return;
+                return null;
             }
         }
         else
@@ -101,7 +108,7 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
                 $error_message = $this->__(self::ERROR_FAILED_TO_SELECT_FOR_UPDATE, $processQueueTaskObject->getId());
                 $this->_logError($error_message);
 
-                return;
+                return null;
             }
         }
         catch(Exception $e)
@@ -109,20 +116,28 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
             $taskResourceSingleton->rollBack();
             $error_message = $this->__(self::EXCEPTION_SELECT_FOR_UPDATE, $processQueueTaskObject->getId(), $e->getMessage());
             $this->_logError($error_message);
-            return;
+            return null;
         }
 
         try
         {
             $taskExecutionResult = $processQueueTaskObject->executeTask();
         }
+        catch(Dunagan_ProcessQueue_Model_Exception_Rollback $taskExecutionResult)
+        {
+            // Rollback the transaction to prevent any orphaned/corrupt data from persisting in the system
+            $taskResourceSingleton->rollBack();
+            // We still want the task to update its status and status message fields according to the task execution,
+            //      so we continue the execution of this method
+        }
         catch(Exception $e)
         {
+            // If the task execution threw an uncaught exception, rollback the transaction and return error status
             $taskResourceSingleton->rollBack();
             $error_message = $this->__(self::EXCEPTION_EXECUTING_TASK, $processQueueTaskObject->getId(), $e->getMessage());
             $processQueueTaskObject->setTaskAsErrored($error_message);
             $this->_logError($error_message);
-            return;
+            return null;
         }
 
         try
@@ -140,7 +155,11 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
 
         try
         {
-            $taskResourceSingleton->commit();
+            // Check to ensure that a rollback transaction exception was not thrown
+            if (!$taskExecutionResult->shouldTransactionBeRolledBack())
+            {
+                $taskResourceSingleton->commit();
+            }
         }
         catch(Exception $e)
         {
@@ -150,6 +169,8 @@ class Dunagan_ProcessQueue_Helper_Task_Processor extends Mage_Core_Helper_Data
             $error_message = $this->__(self::EXCEPTION_COMMITTING_TRANSACTION, $processQueueTaskObject->getId(), $e->getMessage());
             $this->_logError($error_message);
         }
+
+        return $taskExecutionResult;
     }
 
     /**

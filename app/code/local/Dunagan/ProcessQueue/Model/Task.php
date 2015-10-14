@@ -176,6 +176,15 @@ class Dunagan_ProcessQueue_Model_Task
         return $methodCallbackResultToReturn;
     }
 
+    protected function _throwRollbackErrorException(Exception $e)
+    {
+        $exception_message = $e->getMessage();
+        $rollbackErrorException = new Dunagan_ProcessQueue_Model_Exception_Rollback_Error($exception_message);
+        $rollbackErrorException->setTaskStatus(Dunagan_ProcessQueue_Model_Task::STATUS_ERROR);
+        $rollbackErrorException->setTaskStatusMessage($exception_message);
+        throw $rollbackErrorException;
+    }
+
     protected function _returnAbortCallbackResult($error_message)
     {
         $methodCallbackResultToReturn = Mage::getModel('dunagan_process_queue/task_result');
@@ -183,5 +192,14 @@ class Dunagan_ProcessQueue_Model_Task
         $methodCallbackResultToReturn->setTaskStatus(Dunagan_ProcessQueue_Model_Task::STATUS_ABORTED);
 
         return $methodCallbackResultToReturn;
+    }
+
+    protected function _throwRollbackAbortException(Exception $e)
+    {
+        $exception_message = $e->getMessage();
+        $rollbackErrorException = new Dunagan_ProcessQueue_Model_Exception_Rollback_Abort($exception_message);
+        $rollbackErrorException->setTaskStatus(Dunagan_ProcessQueue_Model_Task::STATUS_ABORTED);
+        $rollbackErrorException->setTaskStatusMessage($exception_message);
+        throw $rollbackErrorException;
     }
 }
