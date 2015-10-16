@@ -36,14 +36,6 @@ interface Dunagan_Base_Controller_Adminhtml_Form_Interface
     public function validateDataAndUpdateObject($objectToUpdate, $posted_object_data);
 
     /**
-     * Should be the name of whatever parameter will pass the object to be
-     * created/edited/deleted's id to the controller
-     *
-     * @return string
-     */
-    public function getObjectParamName();
-
-    /**
      * Should be a human readable description of what object this form is
      *  creating/editing/deleting. This will likely be the same value as
      *  Dunagan_Base_Controller_Adminhtml_Interface::getModuleInstanceDescription()
@@ -55,22 +47,12 @@ interface Dunagan_Base_Controller_Adminhtml_Form_Interface
     public function getObjectDescription();
 
     /**
-     * For whatever object is being edited/saved/deleted by this controller, this should be what comes
-     * after the module's groupname in the object's full classname
-     *  e.g.    catalog/product <--- would be "product" in this case
+     * Should return the name of the block which will be rendered in the content section of the form action page.
+     * The block which the controller loads will have the following form:
+     *          {getModuleGroupname()}/{getFormBlockName()}_edit
      *
-     * @return string
-     */
-    public function getModuleInstance();
-
-    /**
-     * Should be the block name of whatever block is to be intialized to load the controller's
-     * index action layout
-     *
-     * e.g.
-     *  If the block to load the page's layout is "adminhtml/sales_order_edit" then
-     *  this method should return "sales_order". IT SHOULD NOT CONTAIN THE "edit" and the
-     *  block's class name MUST end in _Edit
+     * So this method should return the {getFormBlockName()} value.
+     * This system assumes that the block being loaded has a classname ending in "_Edit"
      *
      * @return string
      */
@@ -87,7 +69,6 @@ interface Dunagan_Base_Controller_Adminhtml_Form_Interface
 
     // OPTIONAL
 
-
     // The following methods are OPTIONAL for classes which inherit from Dunagan_Base_Controller_Adminhtml_Form_Abstract
 
     /**
@@ -102,4 +83,12 @@ interface Dunagan_Base_Controller_Adminhtml_Form_Interface
      * @return string
      */
     public function getFormBackControllerActionPath();
+
+    /**
+     * Defines the element array name for the object being created/updated in the form
+     *
+     * @return string - By default, Dunagan_Base_Controller_Adminhtml_Form_Abstract will return
+     *                      $this->getObjectParamName() . '_data'
+     */
+    public function getFormElementArrayName();
 }

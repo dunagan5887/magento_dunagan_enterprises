@@ -11,16 +11,27 @@
 class Dunagan_Base_Block_Adminhtml_Widget_Grid_Container
     extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
+    /**
+     * This class assumes that the controller loading it extends the
+     *      Dunagan_Base_Controller_Adminhtml_Abstract class
+     *
+     * @return Dunagan_Base_Controller_Adminhtml_Abstract
+     */
+    public function getAction()
+    {
+        return parent::getAction();
+    }
+
     public function __construct()
     {
-        $controllerAction = $this->getAction();
-        $module_groupname = $controllerAction->getModuleGroupname();
-        $module_instance_description = $controllerAction->getModuleInstanceDescription();
+        $block_module_groupname = $this->getAction()->getModuleGroupname();
+        $this->_blockGroup = $block_module_groupname;
+        $this->_controller = $this->getAction()->getIndexBlockName();
 
-        $this->_blockGroup = $module_groupname;
-        $this->_controller = $controllerAction->getIndexBlockName();
-        $this->_headerText = Mage::helper($module_groupname)->__($module_instance_description);
         parent::__construct();
+
+        $this->_headerText = $this->getDefinedHeaderText();
+        $this->_objectId = $this->getObjectId();
 
         $action_buttons_array = $this->getActionButtonsToRender();
 
@@ -52,6 +63,18 @@ class Dunagan_Base_Block_Adminhtml_Widget_Grid_Container
 
 
     // OPTIONAL
+
+    public function getDefinedHeaderText()
+    {
+        $module_groupname = $this->getAction()->getModuleGroupname();
+        $module_instance_description = $this->getAction()->getModuleInstanceDescription();
+        return Mage::helper($module_groupname)->__($module_instance_description);
+    }
+
+    public function getObjectId()
+    {
+        return 'admin_grid_container_block_id';
+    }
 
     // Subclass may override this class
     public function getActionButtonsToRender()

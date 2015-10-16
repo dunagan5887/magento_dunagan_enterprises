@@ -19,6 +19,12 @@ abstract class Dunagan_Base_Controller_Adminhtml_Abstract
 
     abstract public function getIndexBlockName();
 
+    abstract public function getModuleInstance();
+
+    abstract public function getIndexActionsController();
+
+    abstract public function getObjectParamName();
+
     // The following is accessible via accessor method getModuleHelper()
     protected $_moduleHelper = null;
 
@@ -59,6 +65,32 @@ abstract class Dunagan_Base_Controller_Adminhtml_Abstract
         $rootBlock->append($gridBlock, 'ajax.grid');
 
         $this->renderLayout();
+    }
+
+    /**
+     * Returns the uri path for whatever controller action is passed in
+     *
+     * @param $action
+     * @return string
+     */
+    public function getUriPathForIndexAction($action)
+    {
+        $uri_path = sprintf('%s/%s/%s', $this->getModuleRouterFrontname(), $this->getIndexActionsController(), $action);
+        return $uri_path;
+    }
+
+    public function getObjectClassname()
+    {
+        $objects_module_instance = $this->getModuleInstance();
+        $objects_module = $this->getModuleGroupname();
+        $object_classname = $objects_module . '/' . $objects_module_instance;
+
+        return $object_classname;
+    }
+
+    public function getModuleRouterFrontname()
+    {
+        return $this->getModuleGroupname();
     }
 
     protected function _setSetupTitle($title)

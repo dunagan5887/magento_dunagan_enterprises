@@ -11,6 +11,17 @@
 class Dunagan_Base_Block_Adminhtml_Widget_Form_Container
     extends Mage_Adminhtml_Block_Widget_Form_Container
 {
+    /**
+     * This class assumes that the controller loading it extends the
+     *      Dunagan_Base_Controller_Adminhtml_Form_Abstract class
+     *
+     * @return Dunagan_Base_Controller_Adminhtml_Form_Abstract
+     */
+    public function getAction()
+    {
+        return parent::getAction();
+    }
+
     public function __construct()
     {
         $controllerAction = $this->getAction();
@@ -23,7 +34,7 @@ class Dunagan_Base_Block_Adminhtml_Widget_Form_Container
 
     public function getFormActionUrl()
     {
-        $uri_path = $this->getAction()->getUriPathForAction('save');
+        $uri_path = $this->getAction()->getUriPathForFormAction('save');
         return $this->getUrl($uri_path);
     }
 

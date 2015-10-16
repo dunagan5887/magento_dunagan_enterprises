@@ -25,15 +25,9 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
 
     abstract public function validateDataAndUpdateObject($objectToSave, $posted_object_data);
 
-    abstract public function getObjectParamName();
-
     abstract public function getObjectDescription();
 
-    abstract public function getModuleInstance();
-
     abstract public function getFormBlockName();
-
-    abstract public function getFormActionsController();
 
     // This class will set this field. It's accessor is given below as getObjectToEdit()
     protected $_objectToEdit = null;
@@ -87,7 +81,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
             // An object's id was passed in, but no existing entity with that id was found
             $object_classname = $this->getObjectClassname();
             $error_message = sprintf(self::ERROR_INVALID_OBJECT_ID, $object_classname, $object_id);
-            $this->_getSession()->addError(Mage::helper($this->getModuleGroupname())->__($error_message));
+            $this->_getSession()->addError($this->getModuleHelper()->__($error_message));
             $this->_redirect('*/*/index');
         }
     }
@@ -102,7 +96,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
             // Object Id was provided but an object was not returned from _initializeObjectFromParam()
             $error_message = sprintf(self::ERROR_INVALID_OBJECT_ID, $this->getObjectClassname(), $object_id);
             $error_message .= ' ' . $this->getObjectDescription() . ' update will not occur.';
-            $this->_getSession()->addError(Mage::helper($this->getModuleGroupname())->__($error_message));
+            $this->_getSession()->addError($this->getModuleHelper()->__($error_message));
             $this->_redirect($this->getFullBackControllerActionPath());
         }
         else
@@ -132,9 +126,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
                 }
 
                 $objectToSave->save();
-                $this->_getSession()->addSuccess(
-                    Mage::helper($this->getModuleGroupname())->__($success_message)
-                );
+                $this->_getSession()->addSuccess($this->getModuleHelper()->__($success_message));
                 $redirect_argument = array($this->getObjectParamName() => $objectToSave->getId());
             }
             catch(Dunagan_Base_Model_Adminhtml_Exception $e)
@@ -164,9 +156,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
     {
         Mage::log($exceptionToLog->getMessage());
         Mage::logException($exceptionToLog);
-        $this->_getSession()->addError(
-            Mage::helper($this->getModuleGroupname())->__($exceptionToLog->getMessage())
-        );
+        $this->_getSession()->addError($this->getModuleHelper()->__($exceptionToLog->getMessage()));
         $redirect_argument = (is_object($objectBeingActedUpon))
                                 ?  array($this->getObjectParamName() => $objectBeingActedUpon->getId())
                                 : array();
@@ -199,10 +189,15 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
         return $object_classname;
     }
 
-    public function getUriPathForAction($action)
+    public function getUriPathForFormAction($action)
     {
-        $uri_path = sprintf('%s/%s/%s', $this->getModuleGroupname(), $this->getFormActionsController(), $action);
+        $uri_path = sprintf('%s/%s/%s', $this->getModuleRouterFrontname(), $this->getFormActionsController(), $action);
         return $uri_path;
+    }
+
+    public function getFormActionsController()
+    {
+        return $this->getIndexActionsController();
     }
 
     public function getFormBackControllerActionPath()
@@ -212,7 +207,7 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
 
     public function getFullBackControllerActionPath()
     {
-        $module_router = $this->getModuleGroupname();
+        $module_router = $this->getModuleRouterFrontname();
         return ($module_router . '/' . $this->getFormBackControllerActionPath());
     }
 
@@ -221,6 +216,9 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
         return ($this->getObjectParamName() . '_data');
     }
 
+    /**
+     * @return Varien_Object
+     */
     public function getObjectToEdit()
     {
         return $this->_objectToEdit;

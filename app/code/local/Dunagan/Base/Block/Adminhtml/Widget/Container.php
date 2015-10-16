@@ -11,6 +11,17 @@ abstract class Dunagan_Base_Block_Adminhtml_Widget_Container
     implements Dunagan_Base_Block_Adminhtml_Widget_Container_Interface
 {
     /**
+     * This class assumes that the controller loading it extends the
+     *      Dunagan_Base_Controller_Adminhtml_Abstract class
+     *
+     * @return Dunagan_Base_Controller_Adminhtml_Abstract
+     */
+    public function getAction()
+    {
+        return parent::getAction();
+    }
+
+    /**
      * The text which should head the page
      *
      * @return string
@@ -33,7 +44,7 @@ abstract class Dunagan_Base_Block_Adminhtml_Widget_Container
         $block_module_groupname = $this->getAction()->getModuleGroupname();
 
         $this->_objectId = $this->getObjectId();
-        $this->setTemplate('widget/form/container.phtml');
+        $this->setTemplate('widget/view/container.phtml');
 
         parent::__construct();
 

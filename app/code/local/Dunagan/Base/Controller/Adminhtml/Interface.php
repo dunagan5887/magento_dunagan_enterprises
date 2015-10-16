@@ -25,6 +25,32 @@ interface Dunagan_Base_Controller_Adminhtml_Interface
     public function getModuleGroupname();
 
     /**
+     * For whatever object is being edited/saved/deleted by this controller, this should be what comes
+     * after the module's groupname in the object's full classname
+     *  e.g.    catalog/product <--- would be "product" in this case
+     *
+     * @return string
+     */
+    public function getModuleInstance();
+
+    /**
+     * Should be the controller that will process the index actions
+     * e.g. if the url for the index action is {frontname}/{controller}/index
+     *              then this method should return the {controller} value
+     *
+     * @return string
+     */
+    public function getIndexActionsController();
+
+    /**
+     * Should be the name of whatever parameter will pass the object to be
+     * created/edited/deleted's id to the controller
+     *
+     * @return string
+     */
+    public function getObjectParamName();
+
+    /**
      * Should be the path to the menu item
      *  e.g. in adminhtml.xml
      * <?xml version="1.0"?>
@@ -61,4 +87,31 @@ interface Dunagan_Base_Controller_Adminhtml_Interface
      * @return string
      */
     public function getIndexBlockName();
+
+
+    // OPTIONAL
+
+    // The following methods are OPTIONAL for classes which inherit from Dunagan_Base_Controller_Adminhtml_Abstract
+    /**
+     * Allows for subclasses to define a custom ACL path for the controller.
+     *
+     *
+     * @return string - By default, the Dunagan_Base_Controller_Adminhtml_Abstract class will use the value defined by
+     *                      getControllerActiveMenuPath()
+     */
+    public function getAclPath();
+
+    /**
+     * Allows for creating blocks to be shown on the page above the grid
+     *
+     * @return $this - By default, the Dunagan_Base_Controller_Adminhtml_Abstract does nothing in this method
+     */
+    public function loadBlocksBeforeGrid();
+
+    /**
+     * Allows for creating blocks to be shown on the page below the grid
+     *
+     * @return $this - By default, the Dunagan_Base_Controller_Adminhtml_Abstract does nothing in this method
+     */
+    public function loadBlocksAfterGrid();
 }

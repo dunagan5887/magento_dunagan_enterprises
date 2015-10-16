@@ -12,6 +12,17 @@
 class Dunagan_Base_Block_Adminhtml_Widget_Grid
     extends Mage_Adminhtml_Block_Widget_Grid
 {
+    /**
+     * This class assumes that the controller loading it extends the
+     *      Dunagan_Base_Controller_Adminhtml_Abstract class
+     *
+     * @return Dunagan_Base_Controller_Adminhtml_Abstract
+     */
+    public function getAction()
+    {
+        return parent::getAction();
+    }
+
     protected $_translationHelper = null;
 
     public function __construct()
@@ -38,12 +49,13 @@ class Dunagan_Base_Block_Adminhtml_Widget_Grid
     public function getRowUrl($row)
     {
         $object_param_name = $this->getAction()->getObjectParamName();
-        return $this->getUrl('*/*/edit', array($object_param_name => $row->getId()));
+        $edit_uri_path = $this->getAction()->getUriPathForIndexAction('edit');
+        return $this->getUrl($edit_uri_path, array($object_param_name => $row->getId()));
     }
 
     public function getGridUrl()
     {
-        $uri_path = $this->getAction()->getUriPathForAction('ajaxGrid');
+        $uri_path = $this->getAction()->getUriPathForIndexAction('ajaxGrid');
         return $this->getUrl($uri_path);
     }
 
