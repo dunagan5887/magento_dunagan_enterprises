@@ -149,7 +149,7 @@ class Dunagan_ProcessQueue_Block_Adminhtml_Index
 
     protected function _getExpediteTasksButtonActionUrl()
     {
-        return $this->getAction()->getUriPathForAction('expedite');
+        return $this->getAction()->getUriPathForIndexAction('expedite');
     }
 
     protected function _getTaskProcessorHelper()

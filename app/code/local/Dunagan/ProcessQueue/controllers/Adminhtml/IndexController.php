@@ -167,7 +167,7 @@ class Dunagan_ProcessQueue_Adminhtml_IndexController
         return 'adminhtml_task';
     }
 
-    public function getFormActionsController()
+    public function getIndexActionsController()
     {
         return 'adminhtml_index';
     }

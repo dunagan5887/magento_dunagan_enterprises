@@ -54,7 +54,7 @@ class Dunagan_ProcessQueue_Adminhtml_Unique_IndexController
         return 'adminhtml_task_unique';
     }
 
-    public function getFormActionsController()
+    public function getIndexActionsController()
     {
         return 'adminhtml_unique_index';
     }
