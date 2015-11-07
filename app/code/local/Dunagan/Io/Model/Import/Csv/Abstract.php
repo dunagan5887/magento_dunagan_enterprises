@@ -16,7 +16,7 @@ abstract class Dunagan_Io_Model_Import_Csv_Abstract
     const ERROR_READING_ENTIRE_FILE = 'Unable to reach the end of file "%s". Entire file was not read.';
 
     abstract public function getRequiredHeaders();
-    abstract public function importDataRow($row_num, $rowData);
+    abstract public function importDataRow($rowData, $row_num);
 
     protected $_file_delimiter = ',';
     protected $_file_enclosure = '"';
