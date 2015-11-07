@@ -47,7 +47,7 @@ $processQueueTaskTable =
             'The method to call.'
         )->addColumn(
             'serialized_arguments_object',
-            Varien_Db_Ddl_Table::TYPE_TEXT,
+            Varien_Db_Ddl_Table::TYPE_BLOB,
             null,
             array(),
             'A serialized object which will be passed as the only argument to the method'
