@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dunagan_Portfolio>
+            <version>0.0.1</version>
+        </Dunagan_Portfolio>
+    </modules>
+
+    <global>
+        <models>
+            <dunagan_portfolio>
+                <class>Dunagan_Portfolio_Model</class>
+                <resourceModel>dunagan_portfolio_mysql4</resourceModel>
+            </dunagan_portfolio>
+            <dunagan_portfolio_mysql4>
+                <class>Dunagan_Portfolio_Model_Mysql4</class>
+            </dunagan_portfolio_mysql4>
+        </models>
+
+        <helpers>
+            <dunagan_portfolio>
+                <class>Dunagan_Portfolio_Helper</class>
+            </dunagan_portfolio>
+        </helpers>
+
+        <blocks>
+            <dunagan_portfolio>
+                <class>Dunagan_Portfolio_Block</class>
+            </dunagan_portfolio>
+        </blocks>
+
+        <resources>
+            <dunagan_portfolio_setup>
+                <setup>
+                    <module>Dunagan_Portfolio</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dunagan_portfolio_setup>
+        </resources>
+    </global>
+
+    <frontend>
+        <routers>
+            <dunagan_portfolio>
+                <use>standard</use>
+                <args>
+                    <module>Dunagan_Portfolio</module>
+                    <frontName>dunagan_portfolio</frontName>
+                </args>
+            </dunagan_portfolio>
+        </routers>
+
+        <layout>
+            <updates>
+                <dunagan_portfolio>
+                    <file>dunagan/portfolio.xml</file>
+                </dunagan_portfolio>
+            </updates>
+        </layout>
+    </frontend>
+</config>
