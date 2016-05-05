@@ -9,4 +9,10 @@
             <block type="core/template" name="portfolio_list" template="dunagan/portfolio/data_science/list.phtml" />
         </reference>
     </dunagan_portfolio_datascience_index>
+
+    <dunagan_portfolio_spark_index>
+        <reference name="content">
+            <block type="core/template" name="portfolio_list" template="dunagan/portfolio/spark/list.phtml" />
+        </reference>
+    </dunagan_portfolio_spark_index>
 </layout>
