@@ -19,6 +19,18 @@ class Worldview_Article_Block_Table extends Mage_Core_Block_Template
      */
     public function getArticleCollectionToDisplay()
     {
-
+        /*
+         * The link below goes into a lot of depth for how to create models in Magento. Here you'll be most interested
+         *  in the "Basic Model Operations", "CRUD, the Magento Way" and "Model Collections" sections. The other
+         *  sections have already been taken care of for you.
+         *
+         * http://devdocs.magento.com/guides/m1x/magefordev/mage-for-dev-5.html
+         *
+         * If you're feeling good about everything, the page below goes in to how to modify the query to select
+         *  articles. The "A Collection of Things" section won't be necessary for now but the rest can be relevant
+         *  depending on how you want to decide which articles to select here
+         *
+         * http://devdocs.magento.com/guides/m1x/magefordev/mage-for-dev-8.html
+         */
     }
 }
