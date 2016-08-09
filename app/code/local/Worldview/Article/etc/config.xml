@@ -52,9 +52,21 @@
                 <use>admin</use>
                 <args>
                     <module>Worldview_Article</module>
-                    <frontName>worldview_article</frontName>
+                    <frontName>admin_worldview_article</frontName>
                 </args>
             </worldview_article>
         </routers>
     </admin>
+
+    <frontend>
+        <routers>
+            <worldview_article>
+                <use>standard</use>
+                <args>
+                    <module>Worldview_Article</module>
+                    <frontName>worldview_articles</frontName>
+                </args>
+            </worldview_article>
+        </routers>
+    </frontend>
 </config>

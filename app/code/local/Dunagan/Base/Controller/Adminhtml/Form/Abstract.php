@@ -202,7 +202,8 @@ abstract class Dunagan_Base_Controller_Adminhtml_Form_Abstract
 
     public function getFormBackControllerActionPath()
     {
-        return 'index/index';
+        $index_actions_controller = $this->getIndexActionsController();
+        return ($index_actions_controller . '/index');
     }
 
     public function getFullBackControllerActionPath()

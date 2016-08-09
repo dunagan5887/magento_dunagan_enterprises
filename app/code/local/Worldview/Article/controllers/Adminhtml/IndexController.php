@@ -7,7 +7,7 @@
  * Class Worldview_Article_IndexController
  */
 
-class Worldview_Article_IndexController
+class Worldview_Article_Adminhtml_IndexController
     extends Dunagan_Base_Controller_Adminhtml_Form_Abstract
     implements Dunagan_Base_Controller_Adminhtml_Form_Interface
 {
@@ -32,6 +32,11 @@ class Worldview_Article_IndexController
     public function getIndexBlockName()
     {
         return 'adminhtml_article_index';
+    }
+
+    public function getIndexActionsController()
+    {
+        return 'adminhtml_index';
     }
 
     // Implementing methods for Dunagan_Base_Controller_Adminhtml_Form_Interface
@@ -71,6 +76,11 @@ class Worldview_Article_IndexController
 
     public function getFormActionsController()
     {
-        return 'index';
+        return 'adminhtml_index';
+    }
+
+    public function getModuleRouterFrontname()
+    {
+        return 'admin_worldview_article';
     }
 } 

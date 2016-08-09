@@ -6,21 +6,15 @@
  * class Dunagan_Base_Block_Adminhtml_Widget_Form
  */
 
+/**
+ * Class Dunagan_Base_Block_Adminhtml_Widget_Form
+ *
+ * @method Dunagan_Base_Controller_Adminhtml_Form_Abstract getAction()
+ */
 abstract class Dunagan_Base_Block_Adminhtml_Widget_Form
     extends Mage_Adminhtml_Block_Widget_Form
     implements Dunagan_Base_Block_Adminhtml_Widget_Form_Interface
 {
-    /**
-     * This class assumes that the controller loading it extends the
-     *      Dunagan_Base_Controller_Adminhtml_Form_Abstract class
-     *
-     * @return Dunagan_Base_Controller_Adminhtml_Form_Abstract
-     */
-    public function getAction()
-    {
-        return parent::getAction();
-    }
-
     const FORM_ELEMENT_FIELD_NAME_TEMPLATE = '%s[%s]';
 
     abstract public function populateFormFieldset(Varien_Data_Form_Element_Fieldset $fieldset);
@@ -85,7 +79,7 @@ abstract class Dunagan_Base_Block_Adminhtml_Widget_Form
         ));
     }
 
-    protected function _addNonEditableTextField(Varien_Data_Form_Element_Fieldset $fieldset, $field, $label)
+    protected function _addNonEditableTextField(Varien_Data_Form_Element_Fieldset $fieldset, $field, $label, $required = false)
     {
         $helper = $this->getAction()->getModuleHelper();
 
@@ -93,7 +87,8 @@ abstract class Dunagan_Base_Block_Adminhtml_Widget_Form
             'name'  => $field,
             'label' => $helper->__($label),
             'title' => $helper->__($label),
-            'text'  => $this->_getValueIfObjectIsSet($field)
+            'text'  => $this->_getValueIfObjectIsSet($field),
+            'required' => ((bool)$required)
         ));
     }
 

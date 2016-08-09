@@ -8,11 +8,11 @@
 class Worldview_Article_Block_Adminhtml_Article_Index_Grid
     extends Dunagan_Base_Block_Adminhtml_Widget_Grid
 {
-    protected function _prepareCollection()
+    /**
+     * @param Worldview_Article_Model_Mysql4_Article_Collection $collection
+     */
+    public function setCollection($collection)
     {
-        $collection = Mage::getModel('worldview_article/article')
-                        ->getCollection();
-
         $source_table = $collection->getResource()->getTable('worldview_source/entity');
 
         $collection->getSelect()->join(
@@ -21,8 +21,7 @@ class Worldview_Article_Block_Adminhtml_Article_Index_Grid
             array('source.name' => "name")
         );
 
-        $this->setCollection($collection);
-        return parent::_prepareCollection();
+        return parent::setCollection($collection);
     }
 
     protected function _prepareColumns()

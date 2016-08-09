@@ -24,8 +24,8 @@ class Dunagan_Base_Block_Adminhtml_Widget_Grid_Container
 
     public function __construct()
     {
-        $block_module_groupname = $this->getAction()->getModuleGroupname();
-        $this->_blockGroup = $block_module_groupname;
+        $module_groupname = $this->getAction()->getModuleGroupname();
+        $this->_blockGroup = $module_groupname;
         $this->_controller = $this->getAction()->getIndexBlockName();
 
         parent::__construct();
