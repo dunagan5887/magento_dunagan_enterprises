@@ -64,9 +64,17 @@
                 <use>standard</use>
                 <args>
                     <module>Worldview_Article</module>
-                    <frontName>worldview_articles</frontName>
+                    <frontName>worldview_article</frontName>
                 </args>
             </worldview_article>
         </routers>
+
+        <layout>
+            <updates>
+                <worldview_article>
+                    <file>worldview/article.xml</file>
+                </worldview_article>
+            </updates>
+        </layout>
     </frontend>
 </config>

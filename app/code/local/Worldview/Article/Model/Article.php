@@ -4,6 +4,8 @@
  * Created: 4/4/15 7:37 PM
  *
  * class Worldview_Article_Model_Article
+ *
+ * @method string getTitle() // Returns the title of the article
  */
 class Worldview_Article_Model_Article extends Mage_Core_Model_Abstract
 {

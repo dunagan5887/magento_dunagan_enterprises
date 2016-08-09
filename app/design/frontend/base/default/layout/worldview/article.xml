@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout>
+    <worldview_article_index_index>
+        <reference name="content">
+            <block type="worldview_article/table" name="worldview_article_table" template="worldview/article/table.phtml">
+                <block type="worldview_article/table_row" name="worldview_article_table_row" template="worldview/article/table/row.phtml"/>
+            </block>
+        </reference>
+    </worldview_article_index_index>
+</layout>

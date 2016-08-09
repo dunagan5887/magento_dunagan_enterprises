@@ -1,0 +1,21 @@
+<?php /* @var $this Worldview_Article_Block_Table */ ?>
+
+<?php
+    $articleCollection = $this->getArticleCollectionToDisplay();
+    $articleTableRowChildBlock = $this->getChild('worldview_article_table_row');
+?>
+
+<table>
+    <!-- Define the table header -->
+    <tr>
+        <th>Title</th>
+        <th>Is Biased</th>
+        <th>Publication Date</th>
+        <th>Description</th>
+        <th>Link</th>
+    </tr>
+    <?php foreach($articleCollection as $articleToDisplay) { ?>
+        <?php $articleTableRowChildBlock->setArticleToDisplay($articleToDisplay); ?>
+        <?php echo $articleTableRowChildBlock->toHtml() ?>
+    <?php } ?>
+</table>
