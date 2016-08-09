@@ -1,5 +1,6 @@
 .idea
 app/etc/local.xml
+php_errors.log
 var/cache
 var/debug
 var/session
